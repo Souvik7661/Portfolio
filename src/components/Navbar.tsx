@@ -47,11 +47,11 @@ export const Navbar: React.FC = () => {
               className="w-9 h-9 rounded-full object-cover border border-white/30 shadow-md group-hover:scale-105 transition-transform"
             />
 
-            <div className="flex flex-col text-left leading-none select-none">
+            <div className="flex items-center gap-1.5 leading-none select-none">
               <span className="font-normal tracking-wider text-xs uppercase text-white">
                 SOUVIK
               </span>
-              <span className="font-pixel text-sm text-[#E8702A] leading-none tracking-wider uppercase mt-0.5">
+              <span className="font-pixel text-sm text-[#E8702A] tracking-wider uppercase">
                 KUNDU
               </span>
             </div>
@@ -93,9 +93,9 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
           <div className="flex items-center gap-3">
             <img src="/images/logo.png" alt="Souvik Kundu Logo" className="w-9 h-9 rounded-full object-cover border border-white/30" />
-            <div className="flex flex-col text-left leading-none">
+            <div className="flex items-center gap-1.5 leading-none select-none">
               <span className="font-normal tracking-wider text-xs uppercase text-white">SOUVIK</span>
-              <span className="font-pixel text-sm text-[#E8702A] leading-none tracking-wider uppercase mt-0.5">KUNDU</span>
+              <span className="font-pixel text-sm text-[#E8702A] tracking-wider uppercase">KUNDU</span>
             </div>
           </div>
 

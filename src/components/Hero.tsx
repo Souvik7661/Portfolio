@@ -49,12 +49,10 @@ export const Hero: React.FC = () => {
 
           {/* COL 1 */}
           <motion.div {...fadeUp(0.1)}>
-            <h2 className="text-lg md:text-xl tracking-wide leading-tight">
-              <span className="block font-normal text-white/90">SOUVIK</span>
-              <span className="block font-pixel text-2xl md:text-3xl text-[#E8702A] font-normal">KUNDU</span>
-            </h2>
-            <p className="font-pixel mt-2 text-xs text-white/60 leading-relaxed">
-              Code · Create · Impact<br />
+            <p className="font-pixel text-xs text-[#E8702A] tracking-widest uppercase mb-1">
+              Code · Create · Impact
+            </p>
+            <p className="font-pixel text-xs text-white/60 leading-relaxed">
               Building software ideas<br />
               into useful digital<br />
               experiences
