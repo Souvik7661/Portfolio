@@ -5,60 +5,138 @@ interface Props {
 }
 
 export const SpotlightReveal: React.FC<Props> = ({ image }) => {
-  const [isMobile, setIsMobile] = useState(false);
   const [transform, setTransform] = useState('none');
   const [glowStyle, setGlowStyle] = useState<React.CSSProperties>({});
   
-  const mouse  = useRef({ normX: 0, normY: 0 });
-  const smooth = useRef({ normX: 0, normY: 0 });
-  const raf    = useRef<number | null>(null);
+  const target  = useRef({ normX: 0, normY: 0 });
+  const current = useRef({ normX: 0, normY: 0 });
+  const shakeOffset = useRef({ x: 0, y: 0 });
+  const raf     = useRef<number | null>(null);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) return;
-
-    const onMove = (e: MouseEvent) => {
+    // ── 1. Desktop Mouse Movement ──
+    const onMouseMove = (e: MouseEvent) => {
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
-      mouse.current = {
+      target.current = {
         normX: (e.clientX - centerX) / centerX,
         normY: (e.clientY - centerY) / centerY,
       };
     };
-    window.addEventListener('mousemove', onMove);
 
+    // ── 2. Mobile Touch Movement ──
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        target.current = {
+          normX: (touch.clientX - centerX) / centerX,
+          normY: (touch.clientY - centerY) / centerY,
+        };
+      }
+    };
+
+    // ── 3. Mobile Device Orientation (Gyroscope Tilt for Android & iOS) ──
+    const onDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma !== null && e.beta !== null) {
+        // gamma: left-to-right tilt (-90 to 90)
+        // beta: front-to-back tilt (-180 to 180)
+        const normX = Math.max(-1, Math.min(1, e.gamma / 35));
+        const normY = Math.max(-1, Math.min(1, (e.beta - 45) / 35)); // 45deg standard natural holding angle
+        target.current = { normX, normY };
+      }
+    };
+
+    // ── 4. Mobile Device Motion (Shake Detection for Android & iOS) ──
+    let lastX = 0, lastY = 0, lastZ = 0;
+    let lastTime = 0;
+    const onDeviceMotion = (e: DeviceMotionEvent) => {
+      const acc = e.accelerationIncludingGravity || e.acceleration;
+      if (!acc) return;
+
+      const currentTime = Date.now();
+      if (currentTime - lastTime > 100) {
+        const diffTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        const x = acc.x || 0;
+        const y = acc.y || 0;
+        const z = acc.z || 0;
+
+        const speed = (Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime) * 10000;
+
+        if (speed > 800) { // Shake detected!
+          shakeOffset.current = {
+            x: (Math.random() - 0.5) * 40,
+            y: (Math.random() - 0.5) * 40,
+          };
+        }
+
+        lastX = x;
+        lastY = y;
+        lastZ = z;
+      }
+    };
+
+    // Request orientation permission on iOS 13+ if supported
+    const initDeviceSensors = () => {
+      if (
+        typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof (DeviceOrientationEvent as any).requestPermission === 'function'
+      ) {
+        (DeviceOrientationEvent as any)
+          .requestPermission()
+          .then((permissionState: string) => {
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientation', onDeviceOrientation, true);
+              window.addEventListener('devicemotion', onDeviceMotion, true);
+            }
+          })
+          .catch(() => {});
+      } else {
+        window.addEventListener('deviceorientation', onDeviceOrientation, true);
+        window.addEventListener('devicemotion', onDeviceMotion, true);
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
+    window.addEventListener('touchstart', initDeviceSensors, { once: true });
+    initDeviceSensors();
+
+    // ── 5. Main Animation Loop (Spring Interpolation & 3D Render) ──
     const tick = () => {
-      const s = smooth.current;
-      const m = mouse.current;
+      const c = current.current;
+      const t = target.current;
+      const s = shakeOffset.current;
       
-      // Fast & responsive lerp (0.10) for immediate cursor feedback
-      s.normX += (m.normX - s.normX) * 0.10;
-      s.normY += (m.normY - s.normY) * 0.10;
+      // Decay shake offset
+      s.x *= 0.88;
+      s.y *= 0.88;
 
-      // Enhanced 3D rotation & translation amplitudes for clearly visible tracking
-      const rotY   = s.normX * 24;  // -24deg to +24deg tilt
-      const rotX   = -s.normY * 16; // -16deg to +16deg tilt
-      const transX = s.normX * 32;  // -32px to +32px pan
-      const transY = s.normY * 20;  // -20px to +20px pan
-      const scale  = 1 + Math.abs(s.normX * 0.04) + Math.abs(s.normY * 0.04); // subtle 3D depth scale
+      // Smooth lerp (0.10) for fluid response
+      c.normX += (t.normX - c.normX) * 0.10;
+      c.normY += (t.normY - c.normY) * 0.10;
+
+      // Calculate 3D tilt & translation values
+      const rotY   = c.normX * 24 + s.x * 0.5;  
+      const rotX   = -c.normY * 16 + s.y * 0.5; 
+      const transX = c.normX * 30 + s.x;  
+      const transY = c.normY * 18 + s.y;  
+      const scale  = 1 + Math.abs(c.normX * 0.04) + Math.abs(c.normY * 0.04);
 
       setTransform(
         `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(${transX.toFixed(2)}px, ${transY.toFixed(2)}px, 0px) scale(${scale.toFixed(3)})`
       );
 
-      // Dynamic light beam shadow following cursor position
-      const shadowX = -s.normX * 45;
-      const shadowY = -s.normY * 35;
-      const orangeIntensity = 0.25 + Math.abs(s.normX) * 0.15;
+      // Dynamic cursor/shake lighting beam
+      const shadowX = -c.normX * 40 + s.x;
+      const shadowY = -c.normY * 30 + s.y;
+      const orangeIntensity = 0.25 + Math.abs(c.normX) * 0.15 + (Math.abs(s.x) > 5 ? 0.3 : 0);
       
       setGlowStyle({
-        filter: `drop-shadow(${shadowX.toFixed(1)}px ${shadowY.toFixed(1)}px 45px rgba(232,112,42,${orangeIntensity.toFixed(2)})) drop-shadow(0 25px 50px rgba(0,0,0,0.8))`,
+        filter: `drop-shadow(${shadowX.toFixed(1)}px ${shadowY.toFixed(1)}px 45px rgba(232,112,42,${orangeIntensity.toFixed(2)})) drop-shadow(0 25px 50px rgba(0,0,0,0.85))`,
       });
 
       raf.current = requestAnimationFrame(tick);
@@ -66,22 +144,25 @@ export const SpotlightReveal: React.FC<Props> = ({ image }) => {
     raf.current = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('deviceorientation', onDeviceOrientation, true);
+      window.removeEventListener('devicemotion', onDeviceMotion, true);
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [isMobile]);
+  }, []);
 
   return (
     <div
       aria-hidden="true"
       className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-transform duration-75 ease-out"
-      style={{ transform: isMobile ? 'none' : transform }}
+      style={{ transform }}
     >
       <img
         src={image}
         alt="Souvik Kundu"
         style={glowStyle}
-        className="h-[82vh] w-auto object-contain opacity-95 transition-all duration-100"
+        className="h-[55vh] sm:h-[72vh] md:h-[82vh] w-auto object-contain opacity-95 transition-all duration-100"
       />
     </div>
   );
