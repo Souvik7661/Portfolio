@@ -17,7 +17,7 @@ A production-grade, full-viewport creative developer portfolio built for **Souvi
 - **Mainframe & Pixel Typography**: Custom integration of Google Fonts (`Inter`, `Playfair Display`) and pixel monospace bitmap fonts (`basis33`).
 - **Interactive Projects Showcase**: Categorized grid filtering with modal detailed view popups and GitHub repository links.
 - **Skills Matrix**: Interactive filterable skill chips across Programming, Web Development, Databases, Core CS, AI & Tools.
-- **Academic & Experience Timeline**: Academic credentials, CGPA metrics (8.68 / 10), university details, and degree milestones.
+- **Academic & Experience Timeline**: Academic credentials, CGPA metrics (8.84 / 10), university details, and degree milestones.
 - **Interactive Multi-Select Contact Inquiry System**: Custom service selection pills with contingent feedback state and responsive contact form.
 - **Responsive Mobile Navigation**: Fullscreen overlay menu with staggered link entrance animations.
 

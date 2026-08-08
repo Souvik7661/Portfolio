@@ -187,7 +187,7 @@ export const Hero: React.FC = () => {
               {/* STATS CHIPS */}
               <div className="self-start lg:self-end flex flex-wrap items-stretch gap-2 sm:gap-3">
                 {[
-                  { label: 'CGPA', value: '8.68 / 10', accent: true },
+                  { label: 'CGPA', value: '8.84 / 10', accent: true },
                   { label: 'DEGREE', value: 'B.Tech CSE', accent: false },
                   { label: 'GRADUATION', value: '2028', accent: false },
                 ].map(({ label, value, accent }) => (

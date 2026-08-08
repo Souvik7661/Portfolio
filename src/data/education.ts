@@ -11,7 +11,7 @@ export const educationInfo: EducationDetails = {
   degree: 'Bachelor of Technology (B.Tech)',
   field: 'Computer Science & Engineering (CSE)',
   university: 'Sister Nivedita University',
-  cgpa: '8.68',
+  cgpa: '8.84',
   graduationYear: '2028',
   location: 'Shyamnagar, West Bengal, India',
 };

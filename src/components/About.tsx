@@ -71,7 +71,7 @@ export const About: React.FC = () => (
             className="grid grid-cols-3 gap-6 pt-6 border-t border-[#E2E2DF]"
           >
             {[
-              { value: '8.68', label: 'CGPA' },
+              { value: '8.84', label: 'CGPA' },
               { value: '2028', label: 'Graduation' },
               { value: 'CSE',  label: 'Degree' },
             ].map(({ value, label }) => (
