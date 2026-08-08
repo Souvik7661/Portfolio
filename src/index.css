@@ -21,9 +21,13 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    overflow-x: hidden;
+    width: 100%;
   }
   body {
     @apply bg-[#0A0A0A] text-white selection:bg-[#EAECE9] selection:text-[#1C2E1E];
+    overflow-x: hidden;
+    width: 100%;
   }
 }
 
