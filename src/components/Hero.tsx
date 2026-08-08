@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { SpotlightReveal } from './SpotlightReveal';
 
-const PROFILE_IMAGE = '/images/profile.png';
+const PROFILE_IMAGE = '/images/profile-cutout.png';
 
 export const Hero: React.FC = () => {
   return (

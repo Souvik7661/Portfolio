@@ -37,9 +37,9 @@ export const SpotlightReveal: React.FC<Props> = ({ image }) => {
       s.normX += (m.normX - s.normX) * 0.07;
       s.normY += (m.normY - s.normY) * 0.07;
 
-      const rotY  = s.normX * 12;
-      const rotX  = -s.normY * 8;
-      const transX = s.normX * 14;
+      const rotY   = s.normX * 12;
+      const rotX   = -s.normY * 8;
+      const transX = s.normX * 16;
       const transY = s.normY * 10;
 
       setTransform(
@@ -56,24 +56,6 @@ export const SpotlightReveal: React.FC<Props> = ({ image }) => {
     };
   }, [isMobile]);
 
-  /* 
-   * CUTOUT TECHNIQUE:
-   * 1. mix-blend-mode: screen  → multiplies light, pure black becomes transparent
-   * 2. Tight ellipse mask       → clips the person tightly, fades edges softly
-   * 3. contrast + brightness    → pushes the dark room BG to near-black so screen kills it
-   *    while keeping the person's face/skin tones visible
-   */
-  const cutoutStyle: React.CSSProperties = {
-    WebkitMaskImage: [
-      'radial-gradient(ellipse 52% 72% at 50% 42%, black 55%, rgba(0,0,0,0.6) 72%, transparent 90%)',
-    ].join(', '),
-    maskImage: [
-      'radial-gradient(ellipse 52% 72% at 50% 42%, black 55%, rgba(0,0,0,0.6) 72%, transparent 90%)',
-    ].join(', '),
-    mixBlendMode: 'screen' as const,
-    filter: 'brightness(1.6) contrast(1.4) saturate(1.1)',
-  };
-
   return (
     <div
       aria-hidden="true"
@@ -83,8 +65,7 @@ export const SpotlightReveal: React.FC<Props> = ({ image }) => {
       <img
         src={image}
         alt="Souvik Kundu"
-        style={cutoutStyle}
-        className="h-[75vh] w-auto object-contain"
+        className="h-[80vh] w-auto object-contain opacity-90 drop-shadow-[0_30px_60px_rgba(232,112,42,0.15)]"
       />
     </div>
   );
