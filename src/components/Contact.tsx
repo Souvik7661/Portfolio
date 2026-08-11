@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ArrowRight, Phone, MapPin, Github } from 'lucide-react';
+import { Check, Phone, MapPin, Github } from 'lucide-react';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { ContactForm } from './ContactForm';
 
 export const Contact: React.FC = () => {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [showForm, setShowForm] = useState(false);
 
   const { displayed, done } = useTypewriter("we'd love to\nhear from you!", 38, 600);
 
@@ -107,7 +106,7 @@ export const Contact: React.FC = () => {
             <div className="overflow-hidden">
               <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">GitHub</p>
               <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 group-hover:text-[#E8702A] transition-colors truncate">
-                @Souvik7661
+                github.com/Souvik7661
               </p>
             </div>
           </a>
@@ -160,7 +159,7 @@ export const Contact: React.FC = () => {
           <div className="pt-4">
             {selectedServices.length === 0 ? (
               <p className="opacity-50 italic text-xs text-[#5A635A]">
-                Please click to select services above.
+                Select any options above or write your message directly below.
               </p>
             ) : (
               <AnimatePresence>
@@ -180,23 +179,20 @@ export const Contact: React.FC = () => {
                     </p>
                   </div>
 
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#1C2E1E] text-white hover:bg-[#2A442E] text-xs font-semibold uppercase tracking-wider transition-all shadow-md shrink-0 cursor-pointer"
+                  <div
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1C2E1E] text-white text-xs font-semibold uppercase tracking-wider shrink-0"
                   >
-                    <span>Let's Go</span>
-                    <ArrowRight className="w-4 h-4 text-[#E8702A]" />
-                  </button>
+                    <span>{selectedServices.length} Selected</span>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                  </div>
                 </motion.div>
               </AnimatePresence>
             )}
           </div>
         </div>
 
-        {/* Contact Form Reveal */}
-        {(showForm || selectedServices.length > 0) && (
-          <ContactForm initialSubject={selectedServices.join(', ')} />
-        )}
+        {/* Contact Form - Always Visible */}
+        <ContactForm initialSubject={selectedServices.join(', ')} />
 
       </div>
     </section>

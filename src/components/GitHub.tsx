@@ -78,6 +78,83 @@ export const GitHubSection: React.FC = () => {
           </div>
         </motion.div>
 
+        {/* Featured Repositories List */}
+        <div className="mt-12 max-w-4xl space-y-4">
+          <h3 className="text-xs font-mono uppercase tracking-widest text-[#E8702A]">
+            Featured Open Source Repositories
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Currency Converter */}
+            <div className="p-6 rounded-2xl bg-[#121212] border border-neutral-800 hover:border-neutral-700 transition-all space-y-4">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Github className="w-5 h-5 text-[#E8702A]" />
+                  Currency Converter
+                </h4>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  Public Repo
+                </span>
+              </div>
+              <p className="text-xs text-neutral-400 leading-relaxed">
+                Real-time financial converter application utilizing currency exchange APIs, rate charts, and clean state handling.
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-neutral-800/60">
+                <a
+                  href="https://github.com/Souvik7661/Currency-Converter/tree/main/Currency_Cal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono font-semibold text-white hover:text-[#E8702A] inline-flex items-center gap-1 transition-colors"
+                >
+                  GitHub Repository <ExternalLink className="w-3 h-3" />
+                </a>
+                <a
+                  href="https://currency-converter-liart-theta.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-[#E8702A] hover:underline inline-flex items-center gap-1"
+                >
+                  Vercel Live <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+
+            {/* Rock Paper Scissors */}
+            <div className="p-6 rounded-2xl bg-[#121212] border border-neutral-800 hover:border-neutral-700 transition-all space-y-4">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Github className="w-5 h-5 text-[#E8702A]" />
+                  Rock Paper Scissors Game
+                </h4>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Public Repo
+                </span>
+              </div>
+              <p className="text-xs text-neutral-400 leading-relaxed">
+                Interactive web game with win-streak tracking, smooth DOM rendering, responsive touch support, and clean state logic.
+              </p>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-neutral-800/60">
+                <a
+                  href="https://github.com/Souvik7661/Rock-Paper-Scissors-game"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono font-semibold text-white hover:text-[#E8702A] inline-flex items-center gap-1 transition-colors"
+                >
+                  GitHub Repository <ExternalLink className="w-3 h-3" />
+                </a>
+                <a
+                  href="https://rock-paper-scissors-game-eight-topaz.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-[#E8702A] hover:underline inline-flex items-center gap-1"
+                >
+                  Vercel Live <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

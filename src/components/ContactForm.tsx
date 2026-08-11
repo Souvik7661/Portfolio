@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2, Phone, Github } from 'lucide-react';
 import { Button } from './ui/Button';
 
 export interface ContactFormProps {
@@ -37,6 +37,18 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialSubject = '' })
       transition={{ duration: 0.5 }}
       className="p-8 sm:p-10 rounded-3xl bg-white border border-[#EAECE9] shadow-xl max-w-2xl mt-10"
     >
+      {/* Contact Quick Details Bar */}
+      <div className="mb-6 p-4 rounded-2xl bg-[#FAFBF9] border border-[#EAECE9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-[#1C2E1E]">
+        <div className="flex items-center gap-2">
+          <Phone className="w-4 h-4 text-[#E8702A]" />
+          <span>Phone: <a href="tel:9841906881" className="font-bold hover:text-[#E8702A] transition-colors">+91 9841906881</a></span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Github className="w-4 h-4 text-[#E8702A]" />
+          <span>GitHub: <a href="https://github.com/Souvik7661" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-[#E8702A] transition-colors">github.com/Souvik7661</a></span>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
