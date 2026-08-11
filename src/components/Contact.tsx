@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Phone, MapPin, Github } from 'lucide-react';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { ContactForm } from './ContactForm';
 
@@ -54,11 +54,63 @@ export const Contact: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-14"
+          className="mb-10"
         >
           <p className="text-lg md:text-xl text-[#5A635A] leading-relaxed font-normal max-w-2xl">
             Whether you have a project idea, collaboration opportunity, internship opportunity, freelance work, or simply want to connect, drop me a message and I'll get back to you as soon as possible.
           </p>
+        </motion.div>
+
+        {/* Contact Quick Info Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-14"
+        >
+          <a
+            href="tel:9841906881"
+            className="p-5 rounded-2xl bg-white border border-[#EAECE9] hover:border-[#1C2E1E]/40 hover:shadow-md transition-all flex items-center gap-4 group"
+          >
+            <div className="p-3 rounded-xl bg-[#1C2E1E]/5 text-[#1C2E1E] group-hover:bg-[#1C2E1E] group-hover:text-white transition-colors shrink-0">
+              <Phone className="w-5 h-5 text-[#E8702A]" />
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">Phone</p>
+              <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 group-hover:text-[#E8702A] transition-colors truncate">
+                +91 9841906881
+              </p>
+            </div>
+          </a>
+
+          <div className="p-5 rounded-2xl bg-white border border-[#EAECE9] flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-[#1C2E1E]/5 text-[#1C2E1E] shrink-0">
+              <MapPin className="w-5 h-5 text-[#E8702A]" />
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">Location</p>
+              <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 truncate">
+                Shyamnagar, West Bengal
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="https://github.com/Souvik7661"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-5 rounded-2xl bg-white border border-[#EAECE9] hover:border-[#1C2E1E]/40 hover:shadow-md transition-all flex items-center gap-4 group"
+          >
+            <div className="p-3 rounded-xl bg-[#1C2E1E]/5 text-[#1C2E1E] group-hover:bg-[#1C2E1E] group-hover:text-white transition-colors shrink-0">
+              <Github className="w-5 h-5 text-[#E8702A]" />
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">GitHub</p>
+              <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 group-hover:text-[#E8702A] transition-colors truncate">
+                @Souvik7661
+              </p>
+            </div>
+          </a>
         </motion.div>
 
         {/* Interactive Multi-Select Service Section */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Github, Linkedin } from 'lucide-react';
+import { ArrowUp, Github, Linkedin, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -28,8 +28,14 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* Social Links */}
+          {/* Social & Contact Links */}
           <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="tel:9841906881"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#171717] hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-xs font-mono transition-colors"
+            >
+              <Phone className="w-4 h-4 text-[#E8702A]" /> +91 9841906881
+            </a>
             <a
               href="https://github.com/Souvik7661"
               target="_blank"

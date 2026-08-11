@@ -28,8 +28,8 @@ export const projectsData: Project[] = [
     description: 'Real-time financial converter application utilizing currency exchange APIs, responsive rate charts, interactive pair calculation, and clean client-side state handling.',
     technologies: ['HTML', 'CSS', 'JavaScript', 'Currency API', 'REST APIs'],
     image: '/images/currency-converter.png',
-    github: 'https://github.com/Souvik7661/currency-converter-app',
-    live: 'https://currency-fx.example.com',
+    github: 'https://github.com/Souvik7661/Currency-Converter/tree/main/Currency_Cal',
+    live: 'https://currency-converter-liart-theta.vercel.app/',
   },
   {
     id: 3,
@@ -38,8 +38,8 @@ export const projectsData: Project[] = [
     description: 'Web game implementation with custom win-streak tracking, smooth DOM rendering, responsive touch support, and clean game state logic.',
     technologies: ['HTML', 'CSS', 'JavaScript', 'Web APIs'],
     image: '/images/rock-paper-scissors.png',
-    github: 'https://github.com/Souvik7661/rock-paper-scissors-game',
-    live: 'https://rps-clash.example.com',
+    github: 'https://github.com/Souvik7661/Rock-Paper-Scissors-game',
+    live: 'https://rock-paper-scissors-game-eight-topaz.vercel.app/',
   },
   {
     id: 4,
