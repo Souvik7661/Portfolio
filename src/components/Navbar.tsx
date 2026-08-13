@@ -29,7 +29,7 @@ export const Navbar: React.FC = () => {
     <>
       {/* ── MAIN NAVBAR ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-md py-3.5 border-b border-white/10' : 'bg-transparent py-5'
+        className={`fixed top-0 left-0 right-0 z-[100] pt-safe transition-all duration-500 ${scrolled ? 'bg-black/90 backdrop-blur-md py-3.5 border-b border-white/10' : 'bg-transparent py-5'
           }`}
       >
         <div className="relative z-10 flex items-center justify-between px-5 sm:px-6 md:px-10 lg:px-14 max-w-7xl mx-auto">
@@ -37,7 +37,7 @@ export const Navbar: React.FC = () => {
           {/* LEFT: LOGO */}
           <a
             href="#hero"
-            className="flex items-center gap-3 text-white select-none group"
+            className="flex items-center gap-3 text-white select-none group py-1"
             aria-label="Souvik Kundu — Home"
           >
             {/* User Logo Image with Full Face & SK Mark */}
@@ -73,7 +73,7 @@ export const Navbar: React.FC = () => {
           {/* RIGHT MOBILE MENU BUTTON (<md) */}
           <button
             onClick={() => setMenuOpen(true)}
-            className="md:hidden p-2 text-white hover:opacity-70 transition-opacity focus:outline-none cursor-pointer"
+            className="md:hidden p-3 -mr-2 text-white hover:opacity-70 transition-opacity focus:outline-none cursor-pointer min-w-[48px] min-h-[48px] flex items-center justify-center"
             aria-label="Open Navigation Menu"
           >
             <Menu size={24} />
@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
 
       {/* ── MOBILE FULLSCREEN MENU ── */}
       <div
-        className={`fixed inset-0 z-[150] bg-black/96 backdrop-blur-md flex flex-col transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[150] bg-black/96 backdrop-blur-md flex flex-col pt-safe pb-safe pl-safe pr-safe transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         role="dialog"
         aria-modal="true"
@@ -101,7 +101,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => setMenuOpen(false)}
-            className="p-2 text-white hover:opacity-70 transition-opacity focus:outline-none cursor-pointer"
+            className="p-3 -mr-2 text-white hover:opacity-70 transition-opacity focus:outline-none cursor-pointer min-w-[48px] min-h-[48px] flex items-center justify-center"
             aria-label="Close Navigation Menu"
           >
             <X size={24} />
@@ -109,7 +109,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Staggered Navigation Links */}
-        <nav className="flex flex-col items-center justify-center flex-1 gap-8 px-6">
+        <nav className="flex flex-col items-center justify-center flex-1 gap-6 sm:gap-8 px-6 py-4 overflow-y-auto">
           {NAV_LINKS.map(({ name, href }, i) => (
             <a
               key={name}
@@ -118,7 +118,7 @@ export const Navbar: React.FC = () => {
               style={{
                 transitionDelay: menuOpen ? `${100 + i * 60}ms` : '0ms',
               }}
-              className={`text-2xl tracking-widest font-mono text-white/90 hover:text-[#E8702A] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              className={`text-xl sm:text-2xl tracking-widest font-mono text-white/90 hover:text-[#E8702A] py-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
             >
               {name}
@@ -128,14 +128,14 @@ export const Navbar: React.FC = () => {
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-6 px-8 py-3 bg-[#E8702A] text-white rounded-full font-semibold text-sm tracking-wider uppercase shadow-xl hover:bg-[#D2611F] transition-colors"
+            className="mt-4 px-8 py-3 bg-[#E8702A] text-white rounded-full font-semibold text-sm tracking-wider uppercase shadow-xl hover:bg-[#D2611F] active:scale-95 transition-all"
           >
             Let's Talk
           </a>
         </nav>
 
         {/* Mobile Footer Note */}
-        <div className="py-6 text-center text-xs text-white/30 font-mono border-t border-white/10">
+        <div className="py-4 sm:py-6 text-center text-xs text-white/30 font-mono border-t border-white/10">
           SOUVIK KUNDU · DESIGN &amp; ENGINEERING
         </div>
       </div>

@@ -16,7 +16,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative h-screen w-full overflow-hidden bg-[#070707] text-white selection:bg-[#E8702A] selection:text-white"
+      className="relative min-h-screen min-h-[100dvh] w-full overflow-hidden bg-[#070707] text-white selection:bg-[#E8702A] selection:text-white pt-safe pb-safe"
       aria-label="Hero — Souvik Kundu Design & Engineering"
     >
       {/* ── Ambient glow — pulses subtly ── */}
@@ -40,9 +40,9 @@ export const Hero: React.FC = () => {
       />
 
       {/* ── MAIN CONTENT ── */}
-      <div className="relative z-30 flex h-full flex-col w-full px-5 sm:px-6 md:px-10 lg:px-14">
+      <div className="relative z-30 flex min-h-screen min-h-[100dvh] flex-col justify-between w-full px-5 sm:px-6 md:px-10 lg:px-14">
 
-        <div className="h-20 sm:h-24" />
+        <div className="h-16 sm:h-24" />
 
         {/* ── 4-COLUMN META GRID ── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 pt-2 sm:pt-4">

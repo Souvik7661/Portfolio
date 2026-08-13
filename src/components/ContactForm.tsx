@@ -61,7 +61,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialSubject = '' })
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Souvik's Guest"
-              className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-sm transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-base sm:text-sm transition-colors"
             />
           </div>
 
@@ -75,7 +75,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialSubject = '' })
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="you@example.com"
-              className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-sm transition-colors"
+              className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-base sm:text-sm transition-colors"
             />
           </div>
         </div>
@@ -89,7 +89,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialSubject = '' })
             value={formData.subject}
             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
             placeholder="Project / Internship / Discussion"
-            className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-sm transition-colors"
+            className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-base sm:text-sm transition-colors"
           />
         </div>
 
@@ -103,7 +103,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ initialSubject = '' })
             value={formData.message}
             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
             placeholder="Write your message here..."
-            className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-sm transition-colors resize-none"
+            className="w-full px-4 py-3 rounded-xl bg-[#FAFBF9] border border-[#EAECE9] text-[#1C2E1E] placeholder-neutral-400 focus:outline-none focus:border-[#1C2E1E] focus:ring-1 focus:ring-[#1C2E1E] text-base sm:text-sm transition-colors resize-none"
           />
         </div>
 

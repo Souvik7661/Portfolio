@@ -80,7 +80,7 @@ export const ProjectCard: React.FC<Props> = ({ project, index }) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`GitHub — ${project.title}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-[#E8702A] transition-colors"
+              className="inline-flex items-center gap-1.5 py-2 text-xs sm:text-sm font-semibold text-white/90 hover:text-[#E8702A] active:opacity-70 transition-colors"
             >
               <Github className="w-4 h-4 text-[#E8702A]" />
               GitHub Repo
@@ -92,7 +92,7 @@ export const ProjectCard: React.FC<Props> = ({ project, index }) => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Live demo — ${project.title}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#E8702A] hover:underline ml-auto"
+              className="inline-flex items-center gap-1.5 py-2 text-xs sm:text-sm font-semibold text-[#E8702A] hover:underline active:opacity-70 ml-auto"
             >
               Live Demo
               <ExternalLink className="w-3.5 h-3.5" />

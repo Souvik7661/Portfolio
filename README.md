@@ -40,6 +40,12 @@ A production-grade, full-viewport creative developer portfolio built for **Souvi
 
 ```
 souvik-portfolio/
+├── android/
+│   ├── debug-checklist.md
+│   └── README.md
+├── ios/
+│   ├── debug-checklist.md
+│   └── README.md
 ├── public/
 │   ├── images/
 │   │   ├── profile.png

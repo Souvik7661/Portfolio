@@ -162,7 +162,7 @@ export const SpotlightReveal: React.FC<Props> = ({ image }) => {
         src={image}
         alt="Souvik Kundu"
         style={glowStyle}
-        className="h-[55vh] sm:h-[72vh] md:h-[82vh] w-auto object-contain opacity-95 transition-all duration-100"
+        className="h-[48vh] sm:h-[68vh] md:h-[82vh] max-h-[750px] w-auto object-contain opacity-90 sm:opacity-95 transition-all duration-100"
       />
     </div>
   );
