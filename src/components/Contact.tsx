@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Phone, MapPin, Github } from 'lucide-react';
+import { Check, Phone, Github } from 'lucide-react';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { ContactForm } from './ContactForm';
+import { LocationMapModal } from './LocationMapModal';
 
 export const Contact: React.FC = () => {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -82,17 +83,8 @@ export const Contact: React.FC = () => {
             </div>
           </a>
 
-          <div className="p-5 rounded-2xl bg-white border border-[#EAECE9] flex items-center gap-4">
-            <div className="p-3 rounded-xl bg-[#1C2E1E]/5 text-[#1C2E1E] shrink-0">
-              <MapPin className="w-5 h-5 text-[#E8702A]" />
-            </div>
-            <div className="overflow-hidden">
-              <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">Location</p>
-              <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 truncate">
-                Shyamnagar, West Bengal
-              </p>
-            </div>
-          </div>
+          {/* Interactive Google Maps & Real-time Location Card */}
+          <LocationMapModal />
 
           <a
             href="https://github.com/Souvik7661"
