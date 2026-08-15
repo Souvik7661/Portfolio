@@ -1,104 +1,159 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Code2, GraduationCap, FolderGit2, Download } from 'lucide-react';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-};
+export const About: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'languages' | 'education' | 'projects'>('languages');
 
-const stagger = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.15 } },
-};
+  const tabData = {
+    languages: {
+      title: 'LANGUAGES',
+      icon: Code2,
+      content: ['Hindi', 'English', 'Bengali'],
+      sub: 'Multilingual Communication',
+    },
+    education: {
+      title: 'EDUCATION',
+      icon: GraduationCap,
+      content: ['Sister Nivedita University', 'B.Tech CSE (2024–2028)', 'Shyamnagar, West Bengal'],
+      sub: 'CGPA: 8.84 / 10',
+    },
+    projects: {
+      title: 'PROJECTS',
+      icon: FolderGit2,
+      content: ['College ERP System (Spring Boot)', 'Currency Converter Web App', 'Rock Paper Scissors Game'],
+      sub: '3 Featured Applications',
+    },
+  };
 
-export const About: React.FC = () => (
-  <section id="about" className="py-28 sm:py-36 bg-[#F7F7F5] text-[#171717] relative overflow-hidden">
-    {/* Subtle background accent */}
-    <div
-      aria-hidden="true"
-      className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-30 pointer-events-none"
-      style={{ background: 'radial-gradient(circle, #d4e8d4 0%, transparent 70%)' }}
-    />
-
-    <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
-      <motion.div
-        variants={stagger}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start"
-      >
-        {/* Left: Section label + editorial headline */}
-        <div className="lg:col-span-5">
-          <motion.span
-            variants={fadeUp}
-            className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#738273] block mb-5"
-          >
-            02 — About Me
-          </motion.span>
-
-          <motion.h2
-            variants={fadeUp}
-            className="font-playfair italic font-normal text-[#1C2E1E] leading-tight"
-            style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', letterSpacing: '-0.03em' }}
-          >
-            I'm Souvik.
-          </motion.h2>
+  return (
+    <section id="about" className="py-24 sm:py-32 bg-[#070707] text-white relative overflow-hidden border-t border-white/10">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
+        
+        {/* Section Header */}
+        <div className="mb-16">
+          <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#E8702A] block mb-3">
+            02 &bull; ABOUT ME
+          </span>
+          <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight uppercase font-sans text-white">
+            ABOUT ME<span className="text-[#E8702A]">.</span>
+          </h2>
         </div>
 
-        {/* Right: Bio + stats */}
-        <div className="lg:col-span-7 space-y-8 pt-1 lg:pt-12">
-          <motion.p
-            variants={fadeUp}
-            className="text-xl sm:text-2xl font-light leading-relaxed text-[#1C2E1E]"
-            style={{ letterSpacing: '-0.01em' }}
-          >
-            I'm a B.Tech CSE student at{' '}
-            <strong className="font-semibold">Sister Nivedita University</strong>{' '}
-            building my skills across software development, web technologies, AI and automation.
-          </motion.p>
-
-          <motion.p
-            variants={fadeUp}
-            className="text-base sm:text-lg text-neutral-600 leading-relaxed"
-          >
-            I learn by building. My focus is on creating clean, thoughtful digital interfaces and writing maintainable code that solves real problems. I care deeply about the details — typography, spacing, interaction, performance.
-          </motion.p>
-
-          {/* Key stats */}
-          <motion.div
-            variants={fadeUp}
-            className="grid grid-cols-3 gap-6 pt-6 border-t border-[#E2E2DF]"
-          >
-            {[
-              { value: '8.84', label: 'CGPA' },
-              { value: '2028', label: 'Graduation' },
-              { value: 'CSE',  label: 'Degree' },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <p className="text-3xl sm:text-4xl font-bold font-mono text-[#1C2E1E] leading-none mb-1">
-                  {value}
-                </p>
-                <p className="text-[11px] uppercase tracking-widest text-[#738273] font-medium">
-                  {label}
-                </p>
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left Column: Portrait Photo */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="relative group max-w-sm w-full">
+              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-[#E8702A]/40 to-cyan-500/30 blur-xl opacity-40 group-hover:opacity-80 transition duration-500" />
+              <div className="relative rounded-2xl overflow-hidden border border-white/20 bg-[#0d0d0d]">
+                <img
+                  src="/images/profile.png"
+                  alt="Souvik Kundu"
+                  className="w-full h-[420px] object-cover object-center filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-white/80">
+                  <span>SOUVIK KUNDU</span>
+                  <span className="text-[#E8702A]">CSE &bull; 2028</span>
+                </div>
               </div>
-            ))}
-          </motion.div>
+            </div>
+          </div>
 
-          {/* Quick chips */}
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-2 pt-2">
-            {['Web Development', 'Full-Stack', 'AI & Automation', 'Problem Solving', 'UI/UX Experiments'].map(tag => (
-              <span
-                key={tag}
-                className="px-3.5 py-1.5 text-xs rounded-full bg-white border border-[#DEDBD6] text-[#1C2E1E] font-medium"
+          {/* Right Column: Bio & Interactive Cards */}
+          <div className="lg:col-span-7 space-y-8">
+            <p className="text-lg sm:text-xl text-white/80 font-light leading-relaxed">
+              As a Computer Science student, my passion lies in crafting high-performance, scalable applications with precision and clean architecture.
+            </p>
+
+            {/* 3 Interactive Tab Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {(Object.keys(tabData) as Array<keyof typeof tabData>).map((key) => {
+                const item = tabData[key];
+                const Icon = item.icon;
+                const isActive = activeTab === key;
+
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setActiveTab(key)}
+                    className={`p-5 rounded-xl border text-left transition-all duration-300 cursor-pointer ${
+                      isActive
+                        ? 'bg-white/10 border-[#E8702A] shadow-[0_0_20px_rgba(232,112,42,0.25)] translate-y-[-2px]'
+                        : 'bg-[#111] border-white/10 hover:border-white/30 text-white/70'
+                    }`}
+                  >
+                    <Icon className={`w-6 h-6 mb-3 ${isActive ? 'text-[#E8702A]' : 'text-white/40'}`} />
+                    <h3 className="text-xs font-mono tracking-widest font-bold uppercase text-white mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-[11px] font-mono text-white/50">{item.sub}</p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Active Tab Detailed View */}
+            <div className="p-6 rounded-xl bg-[#0e0e0e] border border-white/10 min-h-[100px] flex items-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="w-full"
+                >
+                  <div className="flex flex-wrap gap-2.5">
+                    {tabData[activeTab].content.map((val) => (
+                      <span
+                        key={val}
+                        className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-white font-medium"
+                      >
+                        {val}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Code Your Stack & Download Resume Footer */}
+            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#E8702A] block mb-3">
+                  CODE YOUR STACK
+                </span>
+                <div className="flex flex-wrap items-center gap-3 text-white/70">
+                  {['React', 'TypeScript', 'Node.js', 'Java', 'Python', 'Tailwind', 'Git'].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded bg-[#171717] border border-white/10 text-[11px] font-mono text-white/80"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Download Resume Button */}
+              <a
+                href="/resume.pdf"
+                download
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[#E8702A] hover:bg-[#d65f1c] text-white text-xs font-bold font-mono tracking-wider uppercase shadow-lg shadow-[#E8702A]/20 transition-all hover:scale-105 shrink-0"
               >
-                {tag}
-              </span>
-            ))}
-          </motion.div>
+                <Download className="w-4 h-4" />
+                <span>DOWNLOAD RESUME</span>
+              </a>
+            </div>
+
+          </div>
+
         </div>
-      </motion.div>
-    </div>
-  </section>
-);
+
+      </div>
+    </section>
+  );
+};

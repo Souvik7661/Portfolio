@@ -2,10 +2,10 @@ import React from 'react';
 import { useMobilePlatform } from './hooks/useMobilePlatform';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { LaptopShowcase } from './components/LaptopShowcase';
 import { About } from './components/About';
-import { Skills } from './components/Skills';
+import { Services } from './components/Services';
 import { Projects } from './components/Projects';
-import { Education } from './components/Education';
 import { GitHubSection } from './components/GitHub';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -14,22 +14,22 @@ export const App: React.FC = () => {
   useMobilePlatform();
 
   return (
-    <div className="relative bg-[#0A0A0A] text-white font-sans selection:bg-[#E8702A] selection:text-white antialiased overflow-x-hidden min-h-screen min-h-[100dvh]">
-      {/* Navigation Bar */}
+    <div className="relative bg-[#070707] text-white font-sans selection:bg-[#E8702A] selection:text-white antialiased overflow-x-hidden min-h-screen min-h-[100dvh]">
+      {/* Navigation Bar & Status Ticker */}
       <Navbar />
 
-      {/* Main Single Page Content */}
+      {/* Main Content Sections */}
       <main>
         <Hero />
+        <LaptopShowcase />
         <About />
-        <Skills />
+        <Services />
         <Projects />
-        <Education />
         <GitHubSection />
         <Contact />
       </main>
 
-      {/* Footer */}
+      {/* Control Center Footer */}
       <Footer />
     </div>
   );

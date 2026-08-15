@@ -1,73 +1,134 @@
-import React from 'react';
-import { ArrowUp, Github, Linkedin, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Github, Linkedin, Phone, ArrowUpRight } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const [timeStr, setTimeStr] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTimeStr(now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <footer className="bg-[#0A0A0A] text-white border-t border-neutral-900 py-16 relative z-10">
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 space-y-12">
+    <footer className="bg-[#050507] text-white border-t border-white/10 pt-20 pb-10 relative z-10 overflow-hidden font-mono">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 space-y-16">
         
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-12 border-b border-neutral-900">
-          {/* Logo & Subtitle */}
-          <div className="space-y-3">
-            <a href="#hero" className="flex items-center gap-3 text-2xl font-bold tracking-tight text-white group">
-              <img src="/images/logo.png" alt="Souvik Kundu Logo" className="w-9 h-9 rounded-full object-cover border border-white/30" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" fill="none">
-                <path d="M 160 88 L 194 34 L 216 0 L 256 0 L 256 40 L 221.5 93.5 L 200 128 L 256 128 L 256 256 L 96 256 L 96 168 L 64.246 220 L 40 256 L 0 256 L 0 216 L 34 162 L 56 128 L 0 128 L 0 0 L 160 0 Z" fill="white" />
-              </svg>
-              <span>SOUVIK KUNDU</span>
-            </a>
-            <p className="text-xs text-neutral-400 font-mono">
-              Computer Science &amp; Engineering Student · Sister Nivedita University
+        {/* Top Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-white/10">
+          
+          {/* Brand & Slogan (5 cols) */}
+          <div className="md:col-span-5 space-y-4">
+            <div className="flex items-center gap-3">
+              <img src="/images/logo.png" alt="Souvik Kundu Logo" className="w-10 h-10 rounded-full object-cover border border-white/30" />
+              <span className="text-xl font-bold tracking-widest text-white uppercase font-sans">
+                SOUVIK<span className="text-[#E8702A]">KUNDU</span>
+              </span>
+            </div>
+
+            <p className="text-xs text-white/60 leading-relaxed max-w-sm font-light">
+              DEVELOPING HIGH QUALITY SCALABLE DIGITAL PRODUCTS, FULL-STACK SYSTEMS, AND REAL-TIME INFRASTRUCTURE.
             </p>
-            <p className="text-xs text-neutral-500 font-mono">
-              Developer · Builder · Learner · Shyamnagar, West Bengal
-            </p>
+
+            <div className="pt-2 text-[11px] text-[#E8702A] tracking-wider uppercase">
+              SISTER NIVEDITA UNIVERSITY &bull; CSE 2028
+            </div>
           </div>
 
-          {/* Social & Contact Links */}
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="tel:9841906881"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#171717] hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-xs font-mono transition-colors"
-            >
-              <Phone className="w-4 h-4 text-[#E8702A]" /> +91 9841906881
-            </a>
-            <a
-              href="https://github.com/Souvik7661"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#171717] hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-xs font-mono transition-colors"
-            >
-              <Github className="w-4 h-4" /> GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/souvik-kundu-0277593b1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#171717] hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 text-xs font-mono transition-colors"
-            >
-              <Linkedin className="w-4 h-4 text-cyan-400" /> LinkedIn
-            </a>
-            <button
-              onClick={scrollToTop}
-              className="p-2.5 rounded-full bg-[#171717] hover:bg-[#E8702A] text-neutral-300 hover:text-white border border-neutral-800 transition-colors cursor-pointer"
-              aria-label="Back to top"
-            >
-              <ArrowUp className="w-4 h-4" />
-            </button>
+          {/* Control Center Links (2 cols) */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="text-xs font-bold tracking-widest uppercase text-white/40 mb-4">
+              CONTROL_CENTER
+            </h4>
+            <ul className="space-y-2 text-xs text-white/80">
+              {['ABOUT', 'SERVICES', 'PORTFOLIO', 'CONTACT'].map((item) => (
+                <li key={item}>
+                  <a href={`#${item.toLowerCase()}`} className="hover:text-[#E8702A] transition-colors">
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          {/* Neural Network Tech Stack (2 cols) */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="text-xs font-bold tracking-widest uppercase text-white/40 mb-4">
+              NEURAL_NETWORK
+            </h4>
+            <ul className="space-y-2 text-xs text-white/70">
+              {['VITE', 'REACT', 'JAVA', 'SPRING BOOT', 'TAILWIND'].map((tech) => (
+                <li key={tech} className="flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-[#E8702A]" />
+                  <span>{tech}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Broadcast Line & Action Button (3 cols) */}
+          <div className="md:col-span-3 space-y-4">
+            <h4 className="text-xs font-bold tracking-widest uppercase text-white/40 mb-4">
+              BROADCAST_LINE
+            </h4>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="https://github.com/Souvik7661"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub Profile"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#E8702A] text-white transition-all border border-white/10"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+              <a
+                href="https://linkedin.com/in/souvik-kundu-0277593b1"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Profile"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#E8702A] text-white transition-all border border-white/10"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a
+                href="tel:9841906881"
+                aria-label="Phone"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#E8702A] text-white transition-all border border-white/10"
+              >
+                <Phone className="w-4 h-4" />
+              </a>
+            </div>
+
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-between w-full px-4 py-3 rounded-lg bg-white/10 hover:bg-[#E8702A] text-white text-xs font-bold tracking-wider uppercase transition-all border border-white/10 group cursor-pointer"
+            >
+              <span>INITIATE TRANSMISSION</span>
+              <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </a>
+          </div>
+
         </div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500">
-          <p>© 2026 Souvik Kundu. All rights reserved.</p>
-          <p className="flex items-center gap-1 text-neutral-400">
-            Designed &amp; Engineered by Souvik Kundu · B.Tech CSE 2028
-          </p>
+        {/* Bottom Tactical Ticker Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40 border-t border-white/5 pt-6">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>PULSE LOG: ALL SYSTEMS GO</span>
+          </div>
+
+          <div className="text-white/60">
+            TO: 2026 || BRIGHT_FUT
+          </div>
+
+          <div>
+            LOCAL_TIME: <span className="text-[#E8702A] font-bold">{timeStr || '19:42:00'}</span>
+          </div>
         </div>
 
       </div>
