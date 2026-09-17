@@ -11,6 +11,7 @@ import { GitHubSection } from './components/GitHub';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { ResumeModal } from './components/ResumeModal';
+import { AIChatbot } from './components/AIChatbot';
 
 export const App: React.FC = () => {
   useMobilePlatform();
@@ -41,6 +42,9 @@ export const App: React.FC = () => {
 
       {/* Interactive Resume Modal Viewer */}
       <ResumeModal isOpen={isResumeModalOpen} onClose={handleCloseResume} />
+
+      {/* Floating AI Cyborg Chatbot */}
+      <AIChatbot onOpenResume={handleOpenResume} />
     </div>
   );
 };
