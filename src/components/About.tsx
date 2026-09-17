@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, GraduationCap, FolderGit2, Download } from 'lucide-react';
+import { Code2, GraduationCap, FolderGit2, Download, Eye } from 'lucide-react';
 
-export const About: React.FC = () => {
+interface AboutProps {
+  onOpenResume?: () => void;
+}
+
+export const About: React.FC<AboutProps> = ({ onOpenResume }) => {
   const [activeTab, setActiveTab] = useState<'languages' | 'education' | 'projects'>('languages');
 
   const tabData = {
@@ -138,15 +142,28 @@ export const About: React.FC = () => {
                 </div>
               </div>
 
-              {/* Download Resume Button */}
-              <a
-                href="/resume.pdf"
-                download
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-lg bg-[#E8702A] hover:bg-[#d65f1c] text-white text-xs font-bold font-mono tracking-wider uppercase shadow-lg shadow-[#E8702A]/20 transition-all hover:scale-105 shrink-0"
-              >
-                <Download className="w-4 h-4" />
-                <span>DOWNLOAD RESUME</span>
-              </a>
+              {/* Resume Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                {onOpenResume && (
+                  <button
+                    type="button"
+                    onClick={onOpenResume}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-mono tracking-wider uppercase border border-white/20 transition-all hover:scale-105 cursor-pointer shadow-md"
+                  >
+                    <Eye className="w-4 h-4 text-[#E8702A]" />
+                    <span>VIEW RESUME</span>
+                  </button>
+                )}
+
+                <a
+                  href="/Souvik_Kundu_Resume.pdf"
+                  download="Souvik_Kundu_Resume.pdf"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#E8702A] hover:bg-[#d65f1c] text-white text-xs font-bold font-mono tracking-wider uppercase shadow-lg shadow-[#E8702A]/20 transition-all hover:scale-105 cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>DOWNLOAD PDF</span>
+                </a>
+              </div>
             </div>
 
           </div>

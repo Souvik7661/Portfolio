@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
               CONTROL_CENTER
             </h4>
             <ul className="space-y-2 text-xs text-white/80">
-              {['ABOUT', 'SERVICES', 'PORTFOLIO', 'CONTACT'].map((item) => (
+              {['ABOUT', 'RESUME', 'SERVICES', 'PORTFOLIO', 'CONTACT'].map((item) => (
                 <li key={item}>
                   <a href={`#${item.toLowerCase()}`} className="hover:text-[#E8702A] transition-colors">
                     {item}
