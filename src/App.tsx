@@ -22,7 +22,7 @@ export const App: React.FC = () => {
   return (
     <div className="relative bg-[#070707] text-white font-sans selection:bg-[#E8702A] selection:text-white antialiased overflow-x-hidden min-h-screen min-h-[100dvh]">
       {/* Navigation Bar & Status Ticker */}
-      <Navbar onOpenResume={handleOpenResume} />
+      <Navbar />
 
       {/* Main Content Sections */}
       <main>

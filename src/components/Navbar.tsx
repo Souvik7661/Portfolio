@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, PhoneCall, FileText } from 'lucide-react';
+import { Menu, X, PhoneCall } from 'lucide-react';
 
 const NAV_LINKS = [
   { name: 'HOME', href: '#hero' },
@@ -10,11 +10,7 @@ const NAV_LINKS = [
   { name: 'CONTACT', href: '#contact' },
 ];
 
-interface NavbarProps {
-  onOpenResume?: () => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
+export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -74,18 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
           </nav>
 
           {/* RIGHT ACTION BUTTON */}
-          <div className="hidden md:flex items-center gap-3">
-            {onOpenResume && (
-              <button
-                type="button"
-                onClick={onOpenResume}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#E8702A]/15 hover:bg-[#E8702A] text-[#E8702A] hover:text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 border border-[#E8702A]/40 cursor-pointer shadow-sm active:scale-95"
-                title="View Resume"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span>RESUME</span>
-              </button>
-            )}
+          <div className="hidden md:flex items-center gap-4">
             <a
               href="tel:9841906881"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-[#E8702A] text-white text-xs font-mono font-bold tracking-wider uppercase transition-all duration-300 border border-white/10 cursor-pointer shadow-lg"
@@ -164,24 +149,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
             </a>
           ))}
 
-          {onOpenResume && (
-            <button
-              type="button"
-              onClick={() => {
-                setMenuOpen(false);
-                onOpenResume();
-              }}
-              className="mt-4 px-8 py-3.5 bg-white/10 hover:bg-[#E8702A] text-white border border-white/20 rounded-full font-bold text-xs tracking-widest uppercase shadow-xl transition-all font-mono flex items-center gap-2 cursor-pointer"
-            >
-              <FileText className="w-4 h-4 text-[#E8702A]" />
-              <span>VIEW RESUME</span>
-            </button>
-          )}
-
           <a
             href="tel:9841906881"
             onClick={() => setMenuOpen(false)}
-            className="mt-2 px-8 py-3.5 bg-[#E8702A] text-white rounded-full font-bold text-xs tracking-widest uppercase shadow-xl hover:bg-[#d65f1c] active:scale-95 transition-all font-mono"
+            className="mt-6 px-8 py-3.5 bg-[#E8702A] text-white rounded-full font-bold text-xs tracking-widest uppercase shadow-xl hover:bg-[#d65f1c] active:scale-95 transition-all font-mono"
           >
             GIVE ME A CALL
           </a>
