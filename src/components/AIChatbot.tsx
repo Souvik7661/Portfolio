@@ -32,7 +32,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 'msg-init',
     sender: 'bot',
-    text: "Hello! I'm Devil  Souvik's AI  Assistant. Ask me anything about his software engineering experience, Sister Nivedita University academics (CGPA 8.84), VALAK AI assistant, full-stack skills, or download his official resume!",
+    text: "Hello! I'm Devil , Souvik's AI Assistant. Ask me anything ",
     timestamp: 'Just now',
     quickReplies: [
       '🎓 Education & CGPA',
@@ -64,6 +64,15 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
     }
   }, [isOpen, messages, isTyping]);
 
+  const triggerResumeDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/Souvik_Kundu_Resume.pdf';
+    link.download = 'Souvik_Kundu_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleSendMessage = (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();
     if (!text || isTyping) return;
@@ -79,9 +88,14 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
     setInputVal('');
     setIsTyping(true);
 
-    // Realistic typing delay for smooth conversational experience
+    // Realistic short typing delay
     setTimeout(() => {
       const botReply: BotResponse = getBotAnswer(text);
+
+      if (botReply.triggerDownload) {
+        triggerResumeDownload();
+      }
+
       const botMessage: Message = {
         id: `bot-${Date.now()}`,
         sender: 'bot',
@@ -93,7 +107,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
 
       setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
-    }, 450);
+    }, 350);
   };
 
   const handleClearChat = () => {
@@ -101,12 +115,21 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
   };
 
   const handleActionClick = (action: BotAction) => {
-    if (action.type === 'view_resume' && onOpenResume) {
-      onOpenResume();
+    if (action.type === 'download_resume') {
+      triggerResumeDownload();
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-${Date.now()}`,
+          sender: 'bot',
+          text: 'Done',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      ]);
       return;
     }
-    if (action.type === 'download_resume') {
-      window.location.href = action.url || '/Souvik_Kundu_Resume.pdf';
+    if (action.type === 'view_resume' && onOpenResume) {
+      onOpenResume();
       return;
     }
     if (action.type === 'projects') {
