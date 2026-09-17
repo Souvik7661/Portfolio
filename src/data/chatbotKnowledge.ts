@@ -167,7 +167,7 @@ He is currently open to software engineering internships, freelance projects, an
     keywords: ['hello', 'hi', 'hey', 'greetings', 'sup', 'yo', 'good morning', 'good evening'],
     matches: (q) => /^(hi|hello|hey|greetings|yo|sup|good\s*(morning|afternoon|evening))\b/i.test(q.trim()),
     response: () => ({
-      text: "Greetings! I'm Souvik's cybernetic AI assistant. I have full access to his resume, academic records, software projects, and technical stack. What would you like to explore?",
+      text: "Hello! I'm Devil  Souvik's AI  Assistant. I have full access to his resume, academic records, software projects, and technical stack. What would you like to explore?",
       quickReplies: ['Tell me about Souvik', 'View His Resume', 'Projects & Systems', 'How to Hire Him'],
     }),
   },

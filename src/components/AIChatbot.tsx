@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X,
   Send,
-  Sparkles,
   RotateCcw,
   Download,
   Eye,
@@ -11,7 +9,9 @@ import {
   ArrowUpRight,
   Bot,
   User,
-  ChevronDown
+  ChevronDown,
+  Sparkles,
+  Flame
 } from 'lucide-react';
 import { getBotAnswer, BotResponse, BotAction } from '../data/chatbotKnowledge';
 
@@ -32,7 +32,7 @@ const INITIAL_MESSAGES: Message[] = [
   {
     id: 'msg-init',
     sender: 'bot',
-    text: "Hello! I'm **Souvik's AI Assistant**. Ask me anything about his software engineering experience, Sister Nivedita University academics (CGPA 8.84), VALAK AI assistant, full-stack skills, or download his official resume!",
+    text: "Hello! I'm Devil  Souvik's AI  Assistant. Ask me anything about his software engineering experience, Sister Nivedita University academics (CGPA 8.84), VALAK AI assistant, full-stack skills, or download his official resume!",
     timestamp: 'Just now',
     quickReplies: [
       '🎓 Education & CGPA',
@@ -46,7 +46,6 @@ const INITIAL_MESSAGES: Message[] = [
 
 export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasPromptBubble, setHasPromptBubble] = useState(true);
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [inputVal, setInputVal] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -127,111 +126,88 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
 
   return (
     <>
-      {/* ── FLOATING BOT TRIGGER (BOTTOM RIGHT) ── */}
-      <div className="fixed bottom-6 right-5 sm:right-7 z-[120] flex items-end gap-3 select-none">
+      {/* ── FLOATING DEVIL BOT TRIGGER (HIGHER & BIGGER IN RIGHT HAND CORNER) ── */}
+      <div className="fixed bottom-14 right-5 sm:bottom-20 sm:right-8 z-[120] flex flex-col items-center select-none">
         
-        {/* Floating "Ask Me" Speech Bubble Tooltip */}
-        <AnimatePresence>
-          {!isOpen && hasPromptBubble && (
-            <motion.div
-              initial={{ opacity: 0, x: 20, scale: 0.9 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8, x: 10 }}
-              transition={{ delay: 0.8, type: 'spring', damping: 20 }}
-              className="relative hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-[#0F0F14]/95 border border-[#E8702A]/40 text-white shadow-[0_0_25px_rgba(232,112,42,0.25)] backdrop-blur-md cursor-pointer group"
-              onClick={() => {
-                setIsOpen(true);
-                setHasPromptBubble(false);
-              }}
-            >
-              <div className="w-2 h-2 rounded-full bg-[#E8702A] animate-ping" />
-              <div className="text-xs font-mono">
-                <span className="font-bold text-white group-hover:text-[#E8702A] transition-colors">
-                  Ask me anything!
-                </span>{' '}
-                <span className="text-white/60">💬</span>
-              </div>
-
-              {/* Close prompt button */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setHasPromptBubble(false);
-                }}
-                className="ml-1 p-0.5 rounded-full hover:bg-white/10 text-white/40 hover:text-white transition-colors"
-                aria-label="Dismiss message"
-              >
-                <X size={12} />
-              </button>
-
-              {/* Little speech bubble pointer triangle */}
-              <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#0F0F14] border-r border-t border-[#E8702A]/40 rotate-45" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* ── BOT AVATAR BUTTON WITH CYBERNETIC ANIMATIONS ── */}
-        <motion.button
-          type="button"
-          onClick={() => {
-            setIsOpen(!isOpen);
-            if (!isOpen) setHasPromptBubble(false);
-          }}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.94 }}
-          className="relative w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-full p-1 cursor-pointer focus:outline-none group"
-          aria-label={isOpen ? 'Close AI Chatbot' : 'Open Souvik AI Chatbot'}
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          className="relative flex flex-col items-center"
         >
-          {/* Animated Holographic Outer Orbit Ring */}
-          <div
-            className="absolute -inset-1 rounded-full border border-dashed border-[#E8702A]/50 pointer-events-none animate-[spin_10s_linear_infinite]"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(232,112,42,0.5))' }}
-          />
-
-          {/* Glowing Aura Pulse */}
-          <div
-            className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#E8702A]/30 to-amber-500/20 blur-md group-hover:blur-lg transition-all animate-pulse"
-          />
-
-          {/* Circular Frame & Cyborg Picture */}
-          <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#E8702A] bg-black shadow-2xl">
-            <img
-              src="/images/ai-avatar-square.jpg"
-              alt="Souvik AI Cyborg Assistant"
-              className="w-full h-full object-cover select-none transform transition-transform duration-500 group-hover:scale-110"
+          {/* Main Interactive Button */}
+          <motion.button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            whileHover={{ scale: 1.07 }}
+            whileTap={{ scale: 0.93 }}
+            className="relative w-20 h-20 sm:w-[92px] sm:h-[92px] rounded-full p-1 cursor-pointer focus:outline-none group shadow-[0_0_35px_rgba(232,112,42,0.45)]"
+            aria-label={isOpen ? 'Close Devil AI Chatbot' : 'Open Devil AI Chatbot'}
+          >
+            {/* Outer Rotating Cybernetic Radar Reticle */}
+            <div
+              className="absolute -inset-2.5 rounded-full border-2 border-dashed border-[#E8702A] pointer-events-none animate-[spin_14s_linear_infinite]"
+              style={{ filter: 'drop-shadow(0 0 10px rgba(232,112,42,0.65))' }}
             />
 
-            {/* ── ANIMATED ROBOTIC EYE GLOW OVERLAY ── */}
-            {/* Positioned on the cyborg eye at 54.4% x, 42.2% y */}
+            {/* Counter-Rotating Inner Tech Ring */}
             <div
-              className="absolute w-3.5 h-3.5 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-10 animate-eyepulse"
-              style={{ left: '54.4%', top: '42.2%' }}
-            >
-              {/* Inner intense pulse core */}
-              <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-80" />
-              {/* Radial neon glow aperture */}
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-red-600 to-[#E8702A] blur-[2px]" />
-              {/* Direct optic lens center */}
-              <div className="relative w-full h-full rounded-full bg-white opacity-90 shadow-[0_0_12px_#ff2200,0_0_24px_#E8702A]" />
+              className="absolute -inset-1 rounded-full border border-amber-400/40 pointer-events-none animate-[spin_20s_linear_infinite_reverse]"
+            />
+
+            {/* Glowing Aura Halo */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#E8702A]/40 to-red-500/30 blur-lg group-hover:blur-xl transition-all animate-pulse" />
+
+            {/* Circular Chassis Frame with Cyborg Portrait */}
+            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#E8702A] bg-black shadow-2xl">
+              <img
+                src="/images/ai-avatar-square.jpg"
+                alt="Devil - Souvik's AI Assistant"
+                className="w-full h-full object-cover select-none transform transition-transform duration-500 group-hover:scale-110"
+              />
+
+              {/* ── INTENSE PULSING ROBOTIC CYBORG EYE ── */}
+              <div
+                className="absolute w-4 h-4 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-10 animate-eyepulse"
+                style={{ left: '54.4%', top: '42.2%' }}
+              >
+                {/* Core laser beacon */}
+                <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-90" />
+                {/* Outer optic flare */}
+                <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-red-600 via-[#E8702A] to-amber-400 blur-[3px]" />
+                {/* White hot iris center */}
+                <div className="relative w-full h-full rounded-full bg-white opacity-95 shadow-[0_0_14px_#ff1100,0_0_28px_#ff6600,0_0_40px_#E8702A]" />
+              </div>
+
+              {/* Vertical Scanning Laser Beam Sweep */}
+              <div className="absolute inset-0 w-full h-1.5 bg-gradient-to-r from-transparent via-[#E8702A] to-transparent pointer-events-none animate-cyberscan" />
             </div>
 
-            {/* Subtle Vertical Scanning Laser Beam across cyborg plate */}
-            <div className="absolute inset-0 w-full h-1 bg-gradient-to-r from-transparent via-[#E8702A]/90 to-transparent pointer-events-none animate-cyberscan" />
-          </div>
-
-          {/* Online Live Status Badge Indicator */}
-          <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#0A0A0C] flex items-center justify-center shadow-lg">
-            <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-          </div>
-
-          {/* Unread / Notification Sparkle icon when closed */}
-          {!isOpen && (
-            <div className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-[#E8702A] text-white flex items-center justify-center shadow-md border border-white/20">
-              <Sparkles size={10} />
+            {/* Live System Indicator Badge */}
+            <div className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-emerald-500 border-2 border-[#0A0A0C] flex items-center justify-center shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-white animate-ping" />
             </div>
-          )}
-        </motion.button>
+
+            {/* Neon Flame / Sparkle Notification Icon */}
+            {!isOpen && (
+              <div className="absolute -top-1.5 -left-1.5 w-6 h-6 rounded-full bg-gradient-to-tr from-[#E8702A] to-red-500 text-white flex items-center justify-center shadow-lg border border-white/30 animate-bounce">
+                <Flame size={12} className="text-yellow-200" />
+              </div>
+            )}
+          </motion.button>
+
+          {/* ── DISTINCTIVE TACTICAL BADGE UNDER THE AVATAR ── */}
+          <motion.div
+            onClick={() => setIsOpen(!isOpen)}
+            whileHover={{ scale: 1.05 }}
+            className="mt-2.5 px-3 py-1 rounded-full bg-[#0E0E14]/95 border border-[#E8702A]/80 shadow-[0_0_18px_rgba(232,112,42,0.4)] backdrop-blur-md cursor-pointer flex items-center gap-1.5 text-white"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-ping" />
+            <span className="text-[11px] font-mono font-extrabold tracking-widest text-[#E8702A] uppercase">
+              DEVIL AI
+            </span>
+            <span className="text-[10px] text-white/60 font-mono font-medium">💬</span>
+          </motion.div>
+        </motion.div>
 
       </div>
 
@@ -241,37 +217,45 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Souvik AI Chatbot Assistant"
-            initial={{ opacity: 0, scale: 0.9, y: 30, originX: 1, originY: 1 }}
+            aria-label="Devil Souvik's AI Assistant"
+            initial={{ opacity: 0, scale: 0.9, y: 25, originX: 1, originY: 1 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            transition={{ type: 'spring', damping: 24, stiffness: 280 }}
-            className="fixed bottom-24 right-4 sm:right-7 z-[120] w-[calc(100vw-2rem)] sm:w-[390px] md:w-[410px] h-[520px] max-h-[80vh] bg-[#0A0A0E]/95 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_30px_rgba(232,112,42,0.2)] flex flex-col overflow-hidden text-white font-sans"
+            exit={{ opacity: 0, scale: 0.9, y: 25 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 280 }}
+            className="fixed bottom-36 right-4 sm:bottom-44 sm:right-8 z-[120] w-[calc(100vw-2rem)] sm:w-[410px] md:w-[430px] h-[550px] max-h-[80vh] bg-[#0A0A0E]/95 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_35px_rgba(232,112,42,0.25)] flex flex-col overflow-hidden text-white font-sans"
           >
+            {/* Cyber Corner HUD Tech Accents */}
+            <div className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-[#E8702A]/70 rounded-tl-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-[#E8702A]/70 rounded-tr-3xl pointer-events-none" />
+
             {/* ── CHAT HEADER ── */}
-            <div className="px-4 py-3.5 bg-gradient-to-r from-[#111117] to-[#0A0A0E] border-b border-white/10 flex items-center justify-between shrink-0">
+            <div className="px-4 sm:px-5 py-3.5 bg-gradient-to-r from-[#14141D] via-[#0E0E15] to-[#0A0A0E] border-b border-white/10 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border border-[#E8702A] shadow-md shrink-0">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#E8702A] shadow-md shrink-0">
                   <img
                     src="/images/ai-avatar-square.jpg"
-                    alt="AI Avatar"
+                    alt="Devil AI Avatar"
                     className="w-full h-full object-cover"
                   />
                   {/* Eye glow on header mini avatar */}
                   <div
-                    className="absolute w-1.5 h-1.5 rounded-full bg-red-500 blur-[1px] animate-pulse"
+                    className="absolute w-2 h-2 rounded-full bg-red-500 blur-[1px] animate-pulse"
                     style={{ left: '54.4%', top: '42.2%' }}
                   />
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5">
-                    <h3 className="text-xs font-mono font-bold tracking-widest uppercase text-white">
-                      SOUVIK AI
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xs font-mono font-extrabold tracking-widest uppercase text-white flex items-center gap-1.5">
+                      <span>DEVIL</span>
+                      <span className="text-[#E8702A]">//</span>
+                      <span>SOUVIK AI</span>
                     </h3>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 border border-emerald-500/20 text-[9px] font-mono text-emerald-400 font-bold">
+                      ONLINE
+                    </span>
                   </div>
                   <p className="text-[10px] font-mono text-white/50">
-                    Neural Portfolio &bull; Resume Knowledge Engine
+                    Neural Knowledge Engine &bull; Portfolio &amp; Resume
                   </p>
                 </div>
               </div>
@@ -281,7 +265,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                 <button
                   type="button"
                   onClick={handleClearChat}
-                  className="p-1.5 rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+                  className="p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
                   title="Clear Chat History"
                   aria-label="Clear chat"
                 >
@@ -290,17 +274,17 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+                  className="p-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
                   title="Minimize Chat"
                   aria-label="Close chat"
                 >
-                  <ChevronDown size={18} />
+                  <ChevronDown size={19} />
                 </button>
               </div>
             </div>
 
             {/* ── MESSAGES THREAD ── */}
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3.5 scrollbar-thin scrollbar-thumb-white/10">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10">
               {messages.map((m) => (
                 <div
                   key={m.id}
@@ -309,15 +293,15 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                   <div className="flex items-end gap-2 max-w-[88%]">
                     {m.sender === 'bot' && (
                       <div className="w-6 h-6 rounded-full bg-[#E8702A]/20 border border-[#E8702A]/40 flex items-center justify-center shrink-0 mb-1 text-[#E8702A]">
-                        <Bot size={12} />
+                        <Bot size={13} />
                       </div>
                     )}
 
                     <div
-                      className={`px-3.5 py-2.5 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${
+                      className={`px-4 py-3 rounded-2xl text-xs sm:text-[13px] leading-relaxed ${
                         m.sender === 'user'
                           ? 'bg-[#E8702A] text-white rounded-br-none shadow-md font-medium'
-                          : 'bg-[#14141B] text-neutral-200 border border-white/10 rounded-bl-none shadow-sm'
+                          : 'bg-[#14141C] text-neutral-200 border border-white/10 rounded-bl-none shadow-sm'
                       }`}
                     >
                       {/* Render text with basic markdown formatting */}
@@ -340,11 +324,11 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
 
                       {/* Embedded Action Button (e.g. Download Resume, View Resume, Call) */}
                       {m.action && (
-                        <div className="mt-2.5 pt-2 border-t border-white/10">
+                        <div className="mt-3 pt-2.5 border-t border-white/10">
                           <button
                             type="button"
                             onClick={() => handleActionClick(m.action!)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E8702A] hover:bg-[#d65f1c] text-white text-[11px] font-mono font-bold tracking-wider uppercase transition-all shadow cursor-pointer active:scale-95"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#E8702A] hover:bg-[#d65f1c] text-white text-[11px] font-mono font-bold tracking-wider uppercase transition-all shadow cursor-pointer active:scale-95"
                           >
                             {m.action.type === 'download_resume' && <Download size={13} />}
                             {m.action.type === 'view_resume' && <Eye size={13} />}
@@ -376,7 +360,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                           key={reply}
                           type="button"
                           onClick={() => handleSendMessage(reply)}
-                          className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-white/5 hover:bg-[#E8702A]/20 hover:border-[#E8702A]/50 border border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
+                          className="text-[11px] font-mono px-3 py-1 rounded-full bg-white/5 hover:bg-[#E8702A]/20 hover:border-[#E8702A]/50 border border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
                         >
                           {reply}
                         </button>
@@ -390,10 +374,10 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
               {isTyping && (
                 <div className="flex items-center gap-2 text-xs font-mono text-white/50 pl-2">
                   <div className="w-5 h-5 rounded-full bg-[#E8702A]/20 flex items-center justify-center text-[#E8702A]">
-                    <Bot size={11} />
+                    <Sparkles size={11} />
                   </div>
                   <div className="flex items-center gap-1">
-                    <span>SOUVIK AI analyzing</span>
+                    <span>DEVIL analyzing</span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-bounce" />
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-bounce [animation-delay:0.15s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-bounce [animation-delay:0.3s]" />
@@ -410,7 +394,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                 e.preventDefault();
                 handleSendMessage();
               }}
-              className="p-3 bg-[#0C0C10] border-t border-white/10 flex items-center gap-2 shrink-0"
+              className="p-3 sm:p-4 bg-[#0C0C12] border-t border-white/10 flex items-center gap-2 shrink-0"
             >
               <input
                 ref={inputRef}
@@ -418,7 +402,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 placeholder="Ask about skills, projects, resume..."
-                className="flex-1 bg-white/5 border border-white/10 focus:border-[#E8702A] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none transition-colors font-mono"
+                className="flex-1 bg-white/5 border border-white/10 focus:border-[#E8702A] rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/40 focus:outline-none transition-colors font-mono"
               />
               <button
                 type="submit"
