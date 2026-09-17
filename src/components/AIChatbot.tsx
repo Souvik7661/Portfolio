@@ -165,17 +165,15 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                 className="w-full h-full object-cover select-none transform transition-transform duration-500 group-hover:scale-110"
               />
 
-              {/* ── INTENSE PULSING ROBOTIC CYBORG EYE ── */}
+              {/* ── COMPACT ROBOTIC CYBORG EYE GLOW ── */}
               <div
-                className="absolute w-4 h-4 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-10 animate-eyepulse"
+                className="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-10 animate-eyepulse flex items-center justify-center"
                 style={{ left: '54.4%', top: '42.2%' }}
               >
-                {/* Core laser beacon */}
-                <div className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-90" />
-                {/* Outer optic flare */}
-                <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-red-600 via-[#E8702A] to-amber-400 blur-[3px]" />
-                {/* White hot iris center */}
-                <div className="relative w-full h-full rounded-full bg-white opacity-95 shadow-[0_0_14px_#ff1100,0_0_28px_#ff6600,0_0_40px_#E8702A]" />
+                {/* Tight red glow halo */}
+                <div className="absolute inset-0 rounded-full bg-red-600/60 blur-[1px]" />
+                {/* Tiny laser iris pinhole */}
+                <div className="relative w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-white shadow-[0_0_4px_#ff2200,0_0_7px_#E8702A]" />
               </div>
 
               {/* Vertical Scanning Laser Beam Sweep */}
@@ -239,7 +237,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
                   />
                   {/* Eye glow on header mini avatar */}
                   <div
-                    className="absolute w-2 h-2 rounded-full bg-red-500 blur-[1px] animate-pulse"
+                    className="absolute w-1 h-1 rounded-full bg-red-500 pointer-events-none -translate-x-1/2 -translate-y-1/2 shadow-[0_0_2px_#ff2200]"
                     style={{ left: '54.4%', top: '42.2%' }}
                   />
                 </div>
