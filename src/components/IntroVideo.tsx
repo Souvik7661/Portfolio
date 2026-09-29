@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
-import { ArrowUp, ArrowRight, Volume2, Film } from 'lucide-react';
+import { ArrowUp, ArrowRight, Film } from 'lucide-react';
 
 export const IntroVideo: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -226,7 +226,7 @@ export const IntroVideo: React.FC = () => {
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0, scale: 1.05 }}
                 transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 z-50 flex flex-col justify-between p-6 sm:p-10 bg-[#070707] select-none"
+                className="absolute inset-0 z-50 flex items-center justify-center p-6 sm:p-10 bg-[#070707] select-none"
               >
                 {/* Gate Ambient Backdrop */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -244,32 +244,8 @@ export const IntroVideo: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95" />
                 </div>
 
-                {/* Gate Top Header */}
-                <div className="relative z-10 flex items-center justify-between w-full">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="/images/logo.png"
-                      alt="Souvik Kundu"
-                      className="w-9 h-9 rounded-full object-cover border border-white/25 shadow-lg ring-1 ring-[#E8702A]/30"
-                    />
-                    <div className="flex items-center gap-1.5 leading-none">
-                      <span className="font-bold tracking-widest text-xs uppercase text-white font-sans">
-                        SOUVIK
-                      </span>
-                      <span className="font-pixel text-sm text-[#E8702A] tracking-wider uppercase">
-                        KUNDU
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 font-mono text-[10px] text-white/50 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-ping" />
-                    <span>1080P &bull; 60FPS</span>
-                  </div>
-                </div>
-
                 {/* Gate Center Showcase & CTA */}
-                <div className="relative z-10 flex flex-col items-center text-center my-auto px-4 max-w-xl mx-auto">
+                <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-xl mx-auto">
                   {/* Central Brand Badge */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -308,7 +284,7 @@ export const IntroVideo: React.FC = () => {
 
                   {/* Primary Enter Button */}
                   <motion.button
-                    id="enter-with-sound-btn"
+                    id="enter-btn"
                     onClick={handleEnter}
                     initial={{ opacity: 0, scale: 0.92 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -324,20 +300,9 @@ export const IntroVideo: React.FC = () => {
                         background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)',
                       }}
                     />
-                    <Volume2 size={18} className="animate-pulse" />
-                    <span className="relative">ENTER WITH SOUND</span>
+                    <span className="relative">CLICK TO ENTER</span>
                     <ArrowRight size={16} className="relative group-hover:translate-x-1 transition-transform" />
                   </motion.button>
-
-                  <p className="text-[11px] font-mono text-white/50 mt-4 tracking-wider">
-                    Sound enabled &bull; Full stereo experience
-                  </p>
-                </div>
-
-                {/* Gate Footer Strip */}
-                <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-white/40 border-t border-white/10 pt-4">
-                  <span>SOUVIK KUNDU ARCHITECTURE</span>
-                  <span>PRESS ENTER OR CLICK TO LAUNCH</span>
                 </div>
               </motion.div>
             )}
