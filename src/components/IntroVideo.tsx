@@ -116,48 +116,45 @@ export const IntroVideo: React.FC = () => {
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
 
-    // Attempt unmuted play first; if browser blocks due to autoplay policy, fall back to muted
-    video.muted = false;
-    video.volume = 1.0;
-    const playPromise = video.play();
+    // Guarantee immediate playback across Safari, Chrome, iOS & Android
+    video.defaultMuted = true;
+    video.muted = true;
 
-    if (ambientVideoRef.current) {
-      ambientVideoRef.current.play().catch(() => {});
-    }
-
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch(() => {
-          // Autoplay with audio was rejected by browser policy: play muted smoothly
-          video.muted = true;
-          video.play().catch(() => {
-            setIsPlaying(false);
-          });
-        });
-    }
-
-    // Automatically unmute upon the very first user interaction anywhere
-    const handleFirstGesture = () => {
+    const playVideos = () => {
       const v = videoRef.current;
       if (!v) return;
-      if (v.muted) {
-        v.muted = false;
-        v.volume = 1.0;
-        // If user interacted early, restart from 0:00 so they hear the full soundtrack
-        if (v.currentTime < 2.5) {
-          v.currentTime = 0;
-        }
+      const p = v.play();
+      if (p !== undefined) {
+        p.then(() => setIsPlaying(true)).catch(() => {});
+      }
+      if (ambientVideoRef.current && ambientVideoRef.current.paused) {
+        ambientVideoRef.current.play().catch(() => {});
+      }
+    };
+
+    playVideos();
+    video.addEventListener('loadedmetadata', playVideos, { once: true });
+    video.addEventListener('canplay', playVideos, { once: true });
+
+    // Automatically unmute and ensure playback upon the very first user interaction anywhere
+    const unlockSound = () => {
+      const v = videoRef.current;
+      if (!v) return;
+      v.muted = false;
+      v.volume = 1.0;
+      // If user interacted early, restart from 0:00 so they hear the full soundtrack
+      if (v.currentTime < 3.0) {
+        v.currentTime = 0;
+      }
+      if (v.paused) {
         v.play().catch(() => {});
       }
     };
 
-    window.addEventListener('click', handleFirstGesture, { once: true });
-    window.addEventListener('keydown', handleFirstGesture, { once: true });
-    window.addEventListener('touchstart', handleFirstGesture, { once: true });
-    window.addEventListener('pointerdown', handleFirstGesture, { once: true });
+    window.addEventListener('click', unlockSound, { once: true });
+    window.addEventListener('keydown', unlockSound, { once: true });
+    window.addEventListener('touchstart', unlockSound, { once: true });
+    window.addEventListener('pointerdown', unlockSound, { once: true });
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
@@ -165,10 +162,12 @@ export const IntroVideo: React.FC = () => {
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
-      window.removeEventListener('click', handleFirstGesture);
-      window.removeEventListener('keydown', handleFirstGesture);
-      window.removeEventListener('touchstart', handleFirstGesture);
-      window.removeEventListener('pointerdown', handleFirstGesture);
+      video.removeEventListener('loadedmetadata', playVideos);
+      video.removeEventListener('canplay', playVideos);
+      window.removeEventListener('click', unlockSound);
+      window.removeEventListener('keydown', unlockSound);
+      window.removeEventListener('touchstart', unlockSound);
+      window.removeEventListener('pointerdown', unlockSound);
     };
   }, []);
 
@@ -290,7 +289,16 @@ export const IntroVideo: React.FC = () => {
               opacity: videoOpacity,
               perspective: 1200,
             }}
-            className="relative z-20 flex items-center justify-center select-none"
+            onClick={() => {
+              const v = videoRef.current;
+              if (!v) return;
+              if (v.paused) {
+                v.play().catch(() => {});
+              }
+              v.muted = false;
+              v.volume = 1.0;
+            }}
+            className="relative z-20 flex items-center justify-center select-none cursor-pointer"
           >
             {/* Elegant Media Frame matching Portfolio About & Hero style */}
             <div className="relative rounded-2xl md:rounded-3xl border border-white/15 overflow-hidden shadow-[0_0_80px_rgba(232,112,42,0.25)] ring-1 ring-white/10 bg-black flex items-center justify-center h-[88vh] md:h-[90vh] max-h-[820px]">
@@ -302,6 +310,8 @@ export const IntroVideo: React.FC = () => {
                 poster="/images/intro-poster.jpg"
                 autoPlay
                 playsInline
+                muted
+                preload="auto"
                 className="h-full w-auto object-contain"
               />
             </div>
