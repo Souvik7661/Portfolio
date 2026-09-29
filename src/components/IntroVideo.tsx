@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
-import { ArrowUp, Film } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import { ArrowUp, ArrowRight, Volume2, Film } from 'lucide-react';
 
 export const IntroVideo: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,8 +8,9 @@ export const IntroVideo: React.FC = () => {
   const ambientVideoRef = useRef<HTMLVideoElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  // Playback & State (Sound ON by default)
-  const [isPlaying, setIsPlaying] = useState(true);
+  // Approach B: Cinematic Gateway State
+  const [hasEntered, setHasEntered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
   const [isScrolledPast, setIsScrolledPast] = useState(false);
 
@@ -26,7 +27,6 @@ export const IntroVideo: React.FC = () => {
   });
 
   // Dynamic Scroll Transforms: Smooth scaling and depth handoff into Hero
-  // Starts 100% full screen (scale 1.0, borderRadius 0) then smoothly transforms
   const videoScale = useTransform(
     smoothProgress,
     [0, 0.45, 0.85, 1],
@@ -75,6 +75,33 @@ export const IntroVideo: React.FC = () => {
     [30, 0]
   );
 
+  // Direct User Activation: Launches unmuted video from 0:00 with full sound
+  const handleEnter = () => {
+    setHasEntered(true);
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.volume = 1.0;
+    video.currentTime = 0;
+    video.play().then(() => setIsPlaying(true)).catch(() => {});
+    if (ambientVideoRef.current) {
+      ambientVideoRef.current.currentTime = 0;
+      ambientVideoRef.current.play().catch(() => {});
+    }
+  };
+
+  // Keyboard shortcut: Press Enter or Space to enter with sound
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!hasEntered && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        handleEnter();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [hasEntered]);
+
   // Video playback listeners
   useEffect(() => {
     const video = videoRef.current;
@@ -116,64 +143,12 @@ export const IntroVideo: React.FC = () => {
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
 
-    // Sound ON by default
-    video.defaultMuted = false;
-    video.muted = false;
-    video.volume = 1.0;
-
-    const playWithSound = () => {
-      const v = videoRef.current;
-      if (!v) return;
-      v.muted = false;
-      v.volume = 1.0;
-      const p = v.play();
-      if (p !== undefined) {
-        p.then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // If browser strictly blocks unmuted autoplay without prior interaction,
-          // ensure video continues playing smoothly and restore full sound on any interaction
-          v.muted = true;
-          v.play().catch(() => {});
-        });
-      }
-      if (ambientVideoRef.current && ambientVideoRef.current.paused) {
-        ambientVideoRef.current.play().catch(() => {});
-      }
-    };
-
-    playWithSound();
-    video.addEventListener('loadedmetadata', playWithSound, { once: true });
-    video.addEventListener('canplay', playWithSound, { once: true });
-
-    // Ensure full sound is on upon any natural interaction
-    const ensureSound = () => {
-      const v = videoRef.current;
-      if (!v) return;
-      v.muted = false;
-      v.volume = 1.0;
-      if (v.paused) {
-        v.play().catch(() => {});
-      }
-    };
-
-    window.addEventListener('click', ensureSound, { once: true });
-    window.addEventListener('keydown', ensureSound, { once: true });
-    window.addEventListener('touchstart', ensureSound, { once: true });
-    window.addEventListener('pointerdown', ensureSound, { once: true });
-
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
       video.removeEventListener('seeked', handleTimeUpdate);
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
-      video.removeEventListener('loadedmetadata', playWithSound);
-      video.removeEventListener('canplay', playWithSound);
-      window.removeEventListener('click', ensureSound);
-      window.removeEventListener('keydown', ensureSound);
-      window.removeEventListener('touchstart', ensureSound);
-      window.removeEventListener('pointerdown', ensureSound);
     };
   }, []);
 
@@ -207,7 +182,12 @@ export const IntroVideo: React.FC = () => {
     if (!videoRef.current) return;
     setIsEnded(false);
     videoRef.current.currentTime = 0;
-    if (ambientVideoRef.current) ambientVideoRef.current.currentTime = 0;
+    videoRef.current.muted = false;
+    videoRef.current.volume = 1.0;
+    if (ambientVideoRef.current) {
+      ambientVideoRef.current.currentTime = 0;
+      ambientVideoRef.current.play().catch(() => {});
+    }
     videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
   };
 
@@ -237,6 +217,131 @@ export const IntroVideo: React.FC = () => {
       >
         {/* ── STICKY FULLSCREEN VIEWPORT: Welcoming Screen ── */}
         <div className="sticky top-0 h-screen h-[100dvh] w-full flex items-center justify-center overflow-hidden p-0 bg-black">
+
+          {/* ── CINEMATIC GATEWAY OVERLAY (APPROACH B) ── */}
+          <AnimatePresence>
+            {!hasEntered && (
+              <motion.div
+                key="cinematic-gate"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute inset-0 z-50 flex flex-col justify-between p-6 sm:p-10 bg-[#070707] select-none"
+              >
+                {/* Gate Ambient Backdrop */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <img
+                    src="/images/intro-poster.jpg"
+                    alt="Atmosphere"
+                    className="w-full h-full object-cover blur-2xl opacity-15 scale-105"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: 'radial-gradient(circle at 50% 50%, rgba(232,112,42,0.18) 0%, rgba(10,10,10,0.7) 45%, #070707 100%)',
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/95" />
+                </div>
+
+                {/* Gate Top Header */}
+                <div className="relative z-10 flex items-center justify-between w-full">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/images/logo.png"
+                      alt="Souvik Kundu"
+                      className="w-9 h-9 rounded-full object-cover border border-white/25 shadow-lg ring-1 ring-[#E8702A]/30"
+                    />
+                    <div className="flex items-center gap-1.5 leading-none">
+                      <span className="font-bold tracking-widest text-xs uppercase text-white font-sans">
+                        SOUVIK
+                      </span>
+                      <span className="font-pixel text-sm text-[#E8702A] tracking-wider uppercase">
+                        KUNDU
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 font-mono text-[10px] text-white/50 bg-white/5 border border-white/10 px-3 py-1 rounded-full uppercase tracking-wider">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8702A] animate-ping" />
+                    <span>1080P &bull; 60FPS</span>
+                  </div>
+                </div>
+
+                {/* Gate Center Showcase & CTA */}
+                <div className="relative z-10 flex flex-col items-center text-center my-auto px-4 max-w-xl mx-auto">
+                  {/* Central Brand Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="mb-6 relative"
+                  >
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-gradient-to-b from-[#E8702A] to-transparent shadow-[0_0_40px_rgba(232,112,42,0.4)]">
+                      <img
+                        src="/images/logo.png"
+                        alt="Souvik Kundu"
+                        className="w-full h-full rounded-full object-cover border-2 border-black"
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Subtitle */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                    className="font-pixel text-xs sm:text-sm text-[#E8702A] tracking-[0.25em] uppercase mb-2"
+                  >
+                    CREATIVE DEVELOPER &bull; CSE 2028
+                  </motion.p>
+
+                  {/* Main Welcome Heading */}
+                  <motion.h1
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    className="text-3xl sm:text-4xl md:text-5xl font-light tracking-wide uppercase text-white mb-6"
+                  >
+                    SOUVIK <span className="font-pixel text-[#E8702A]">KUNDU</span>
+                  </motion.h1>
+
+                  {/* Primary Enter Button */}
+                  <motion.button
+                    id="enter-with-sound-btn"
+                    onClick={handleEnter}
+                    initial={{ opacity: 0, scale: 0.92 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 50px rgba(232,112,42,0.8)' }}
+                    whileTap={{ scale: 0.96 }}
+                    className="relative group inline-flex items-center gap-3.5 overflow-hidden border border-[#E8702A] bg-[#E8702A] hover:bg-[#d65f1c] px-9 py-4 rounded-full text-white text-xs sm:text-sm font-mono font-bold tracking-widest uppercase cursor-pointer shadow-[0_0_35px_rgba(232,112,42,0.55)] transition-all duration-300"
+                  >
+                    {/* Shimmer Effect */}
+                    <span
+                      className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
+                      style={{
+                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)',
+                      }}
+                    />
+                    <Volume2 size={18} className="animate-pulse" />
+                    <span className="relative">ENTER WITH SOUND</span>
+                    <ArrowRight size={16} className="relative group-hover:translate-x-1 transition-transform" />
+                  </motion.button>
+
+                  <p className="text-[11px] font-mono text-white/50 mt-4 tracking-wider">
+                    Sound enabled &bull; Full stereo experience
+                  </p>
+                </div>
+
+                {/* Gate Footer Strip */}
+                <div className="relative z-10 flex items-center justify-between text-[11px] font-mono text-white/40 border-t border-white/10 pt-4">
+                  <span>SOUVIK KUNDU ARCHITECTURE</span>
+                  <span>PRESS ENTER OR CLICK TO LAUNCH</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* ── PORTFOLIO UI AMBIENT ATMOSPHERE ── */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0 bg-[#070707]">
