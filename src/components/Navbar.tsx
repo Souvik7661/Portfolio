@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, PhoneCall } from 'lucide-react';
 
 const NAV_LINKS = [
+  { name: 'INTRO', href: '#intro' },
   { name: 'HOME', href: '#hero' },
   { name: 'ABOUT', href: '#about' },
   { name: 'RESUME', href: '#resume' },
@@ -12,10 +13,16 @@ const NAV_LINKS = [
 
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      // Navbar is hidden on welcoming screen; appears once scrolling into main portfolio
+      setIsVisible(window.scrollY > 200);
+      setScrolled(window.scrollY > 350);
+    };
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -27,17 +34,21 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* MAIN NAVBAR */}
+      {/* MAIN NAVBAR - Hidden on welcoming screen */}
       <header
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
-          scrolled ? 'bg-[#070707]/90 backdrop-blur-md py-3 border-b border-white/10' : 'bg-transparent py-5'
+          !isVisible
+            ? 'opacity-0 pointer-events-none -translate-y-4'
+            : scrolled
+            ? 'opacity-100 pointer-events-auto bg-[#070707]/90 backdrop-blur-md py-3 border-b border-white/10 translate-y-0'
+            : 'opacity-100 pointer-events-auto bg-transparent py-5 translate-y-0'
         }`}
       >
         <div className="flex items-center justify-between px-5 sm:px-8 md:px-12 max-w-7xl mx-auto w-full">
 
           {/* LEFT: LOGO */}
           <a
-            href="#hero"
+            href="#intro"
             className="flex items-center gap-3 text-white select-none group py-1"
             aria-label="Souvik Kundu — Home"
           >

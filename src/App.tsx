@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMobilePlatform } from './hooks/useMobilePlatform';
 import { Navbar } from './components/Navbar';
+import { IntroVideo } from './components/IntroVideo';
 import { Hero } from './components/Hero';
 import { LaptopShowcase } from './components/LaptopShowcase';
 import { About } from './components/About';
@@ -21,12 +22,13 @@ export const App: React.FC = () => {
   const handleCloseResume = () => setIsResumeModalOpen(false);
 
   return (
-    <div className="relative bg-[#070707] text-white font-sans selection:bg-[#E8702A] selection:text-white antialiased overflow-x-hidden min-h-screen min-h-[100dvh]">
+    <div className="relative bg-[#070707] text-white font-sans selection:bg-[#E8702A] selection:text-white antialiased overflow-x-clip min-h-screen min-h-[100dvh]">
       {/* Navigation Bar & Status Ticker */}
       <Navbar />
 
       {/* Main Content Sections */}
       <main>
+        <IntroVideo />
         <Hero />
         <LaptopShowcase />
         <About onOpenResume={handleOpenResume} />

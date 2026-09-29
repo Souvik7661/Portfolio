@@ -57,6 +57,17 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsVisible(window.scrollY > 200);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
@@ -150,7 +161,11 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
   return (
     <>
       {/* ── FLOATING DEVIL BOT TRIGGER (HIGHER & BIGGER IN RIGHT HAND CORNER) ── */}
-      <div className="fixed bottom-14 right-5 sm:bottom-20 sm:right-8 z-[120] flex flex-col items-center select-none">
+      <div
+        className={`fixed bottom-14 right-5 sm:bottom-20 sm:right-8 z-[120] flex flex-col items-center select-none transition-all duration-500 ${
+          isVisible ? 'opacity-100 pointer-events-auto scale-100' : 'opacity-0 pointer-events-none scale-75'
+        }`}
+      >
         
         <motion.div
           animate={{ y: [0, -6, 0] }}
