@@ -116,45 +116,51 @@ export const IntroVideo: React.FC = () => {
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
 
-    // Guarantee immediate playback across Safari, Chrome, iOS & Android
-    video.defaultMuted = true;
-    video.muted = true;
+    // Sound ON by default
+    video.defaultMuted = false;
+    video.muted = false;
+    video.volume = 1.0;
 
-    const playVideos = () => {
+    const playWithSound = () => {
       const v = videoRef.current;
       if (!v) return;
+      v.muted = false;
+      v.volume = 1.0;
       const p = v.play();
       if (p !== undefined) {
-        p.then(() => setIsPlaying(true)).catch(() => {});
+        p.then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
+          // If browser strictly blocks unmuted autoplay without prior interaction,
+          // ensure video continues playing smoothly and restore full sound on any interaction
+          v.muted = true;
+          v.play().catch(() => {});
+        });
       }
       if (ambientVideoRef.current && ambientVideoRef.current.paused) {
         ambientVideoRef.current.play().catch(() => {});
       }
     };
 
-    playVideos();
-    video.addEventListener('loadedmetadata', playVideos, { once: true });
-    video.addEventListener('canplay', playVideos, { once: true });
+    playWithSound();
+    video.addEventListener('loadedmetadata', playWithSound, { once: true });
+    video.addEventListener('canplay', playWithSound, { once: true });
 
-    // Automatically unmute and ensure playback upon the very first user interaction anywhere
-    const unlockSound = () => {
+    // Ensure full sound is on upon any natural interaction
+    const ensureSound = () => {
       const v = videoRef.current;
       if (!v) return;
       v.muted = false;
       v.volume = 1.0;
-      // If user interacted early, restart from 0:00 so they hear the full soundtrack
-      if (v.currentTime < 3.0) {
-        v.currentTime = 0;
-      }
       if (v.paused) {
         v.play().catch(() => {});
       }
     };
 
-    window.addEventListener('click', unlockSound, { once: true });
-    window.addEventListener('keydown', unlockSound, { once: true });
-    window.addEventListener('touchstart', unlockSound, { once: true });
-    window.addEventListener('pointerdown', unlockSound, { once: true });
+    window.addEventListener('click', ensureSound, { once: true });
+    window.addEventListener('keydown', ensureSound, { once: true });
+    window.addEventListener('touchstart', ensureSound, { once: true });
+    window.addEventListener('pointerdown', ensureSound, { once: true });
 
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
@@ -162,12 +168,12 @@ export const IntroVideo: React.FC = () => {
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
-      video.removeEventListener('loadedmetadata', playVideos);
-      video.removeEventListener('canplay', playVideos);
-      window.removeEventListener('click', unlockSound);
-      window.removeEventListener('keydown', unlockSound);
-      window.removeEventListener('touchstart', unlockSound);
-      window.removeEventListener('pointerdown', unlockSound);
+      video.removeEventListener('loadedmetadata', playWithSound);
+      video.removeEventListener('canplay', playWithSound);
+      window.removeEventListener('click', ensureSound);
+      window.removeEventListener('keydown', ensureSound);
+      window.removeEventListener('touchstart', ensureSound);
+      window.removeEventListener('pointerdown', ensureSound);
     };
   }, []);
 
@@ -310,7 +316,6 @@ export const IntroVideo: React.FC = () => {
                 poster="/images/intro-poster.jpg"
                 autoPlay
                 playsInline
-                muted
                 preload="auto"
                 className="h-full w-auto object-contain"
               />
