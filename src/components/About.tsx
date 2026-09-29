@@ -54,7 +54,9 @@ export const About: React.FC<AboutProps> = ({ onOpenResume }) => {
               <div className="relative rounded-2xl overflow-hidden border border-white/20 bg-[#0d0d0d]">
                 <img
                   src="/images/profile.png"
-                  alt="Souvik Kundu"
+                  alt="Souvik Kundu — Creative Developer & Computer Science Engineer"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-[420px] object-cover object-center filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />

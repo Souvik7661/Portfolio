@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page Not Found | Souvik Kundu</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/d08bafd725a4cfc309efb5a88e0b63a5?family=basis33" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background-color: #070707;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .glow {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(232, 112, 42, 0.22) 0%, rgba(7, 7, 7, 0) 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .content {
+        position: relative;
+        z-index: 10;
+        max-width: 480px;
+      }
+      .logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #E8702A;
+        box-shadow: 0 0 35px rgba(232, 112, 42, 0.45);
+        margin-bottom: 24px;
+      }
+      .code {
+        font-family: 'basis33', monospace;
+        font-size: 5rem;
+        line-height: 1;
+        color: #E8702A;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      p {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 32px;
+        line-height: 1.6;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #E8702A;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 14px 32px;
+        border-radius: 9999px;
+        font-size: 0.8125rem;
+        font-family: monospace;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        box-shadow: 0 0 35px rgba(232, 112, 42, 0.55);
+        transition: transform 0.2s, background-color 0.2s;
+      }
+      .btn:hover {
+        background-color: #d65f1c;
+        transform: scale(1.04);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow"></div>
+    <div class="content">
+      <img src="/images/logo.png" alt="Souvik Kundu" class="logo" />
+      <div class="code">404</div>
+      <h1>Signal Lost — Page Not Found</h1>
+      <p>The coordinate or frequency you are trying to reach does not exist or has been shifted in the architecture.</p>
+      <a href="/" class="btn">Return to Portfolio &rarr;</a>
+    </div>
+  </body>
+</html>

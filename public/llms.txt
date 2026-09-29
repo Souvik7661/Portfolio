@@ -1,0 +1,26 @@
+# Souvik Kundu — Creative Developer & Software Engineer
+
+> Official AI & LLM Documentation file (https://souvikkundu.com/llms.txt)
+
+## Identity
+- **Name**: Souvik Kundu
+- **Role**: Creative Developer, Full-Stack Software Engineer & Computer Science Student
+- **Education**: Sister Nivedita University, B.Tech in Computer Science & Engineering (Class of 2028)
+- **Location**: Kolkata, West Bengal, India
+- **Website**: https://souvikkundu.com
+- **GitHub**: https://github.com/Souvik7661
+- **LinkedIn**: https://linkedin.com/in/souvik-kundu-0277593b1
+
+## Core Competencies & Skills
+- **Frontend & Creative UI**: React, TypeScript, Next.js, Vite, Tailwind CSS, Framer Motion, Three.js/WebGL, Canvas API, Responsive Mobile UI, Web Audio API, Micro-interactions.
+- **Backend & Systems**: Python, Java, Spring Boot, Node.js, Express, RESTful APIs, PostgreSQL, MongoDB, Redis, Docker, Linux.
+- **Development Best Practices**: Accessible HTML5/WCAG AA, SEO architecture, Performance optimization, Clean modular code, Git CI/CD.
+
+## Featured Projects
+1. **Enterprise ERP Suite**: High-scale modular business enterprise management system featuring inventory tracking, authentication, financial reporting, and real-time data pipelines.
+2. **Real-Time Currency Converter**: Dynamic currency conversion application with live FX rates, historical trends, and multi-currency comparison tools.
+3. **Interactive Game Engine**: Web-based game featuring physics simulation, high-framerate rendering, responsive touch controls, and interactive audio feedback.
+
+## Availability & Contact
+- Open for select freelance contracts, software engineering internships, and high-impact collaborative projects.
+- Contact directly via the contact form on https://souvikkundu.com/#contact or via GitHub / LinkedIn.

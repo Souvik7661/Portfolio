@@ -1,0 +1,8 @@
+# Robots.txt for Souvik Kundu Portfolio (https://souvikkundu.com)
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /scratch/
+
+# Sitemap location
+Sitemap: https://souvikkundu.com/sitemap.xml

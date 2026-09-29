@@ -225,9 +225,9 @@ export const IntroVideo: React.FC = () => {
                 </p>
 
                 {/* Main Welcome Heading */}
-                <h1 className="text-2xl sm:text-3xl md:text-5xl font-light tracking-wide uppercase text-white mb-5 sm:mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-5xl font-light tracking-wide uppercase text-white mb-5 sm:mb-6">
                   SOUVIK <span className="font-pixel text-[#E8702A]">KUNDU</span>
-                </h1>
+                </h2>
 
                 {/* Primary Enter Button */}
                 <motion.button
