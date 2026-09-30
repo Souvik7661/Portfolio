@@ -119,10 +119,11 @@ export const CinematicContact: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4 font-mono text-xs">
               <div>
-                <label className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
+                <label htmlFor="contact-name" className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
                   YOUR NAME *
                 </label>
                 <input
+                  id="contact-name"
                   type="text"
                   required
                   value={name}
@@ -133,10 +134,11 @@ export const CinematicContact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
+                <label htmlFor="contact-email" className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
                   YOUR EMAIL *
                 </label>
                 <input
+                  id="contact-email"
                   type="email"
                   required
                   value={email}
@@ -147,10 +149,11 @@ export const CinematicContact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
+                <label htmlFor="contact-subject" className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
                   SUBJECT / INQUIRY
                 </label>
                 <input
+                  id="contact-subject"
                   type="text"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
@@ -160,10 +163,11 @@ export const CinematicContact: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
+                <label htmlFor="contact-message" className="block text-white/80 uppercase mb-1 font-bold text-[11px]">
                   YOUR MESSAGE *
                 </label>
                 <textarea
+                  id="contact-message"
                   rows={4}
                   required
                   value={message}
