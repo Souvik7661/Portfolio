@@ -13,7 +13,8 @@ import {
   Sparkles,
   Flame
 } from 'lucide-react';
-import { getBotAnswer, BotResponse, BotAction } from '../data/chatbotKnowledge';
+import { BotResponse, BotAction } from '../data/chatbotKnowledge';
+import { askDevilAI } from '../services/geminiChat';
 
 interface Message {
   id: string;
@@ -84,7 +85,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
     document.body.removeChild(link);
   };
 
-  const handleSendMessage = (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputVal).trim();
     if (!text || isTyping) return;
 
@@ -95,13 +96,18 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInputVal('');
     setIsTyping(true);
 
-    // Realistic short typing delay
-    setTimeout(() => {
-      const botReply: BotResponse = getBotAnswer(text);
+    try {
+      const historyContext = updatedMessages.map((m) => ({
+        sender: m.sender,
+        text: m.text,
+      }));
+
+      const botReply: BotResponse = await askDevilAI(text, historyContext);
 
       if (botReply.triggerDownload) {
         triggerResumeDownload();
@@ -117,8 +123,26 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ onOpenResume }) => {
       };
 
       setMessages((prev) => [...prev, botMessage]);
+    } catch (err) {
+      console.error('Error getting AI reply:', err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-${Date.now()}`,
+          sender: 'bot',
+          text: "I'm here to help with Souvik's projects, technical skills, education, and resume. Feel free to ask another question!",
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          quickReplies: [
+            '🎓 Education & CGPA',
+            '💼 Featured Projects',
+            '⚡ Tech Stack',
+            '📄 Download Resume',
+          ],
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 350);
+    }
   };
 
   const handleClearChat = () => {

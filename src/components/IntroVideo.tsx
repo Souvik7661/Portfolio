@@ -49,18 +49,37 @@ export const IntroVideo: React.FC = () => {
     [1, 1, 0]
   );
 
+  // Disable browser scroll restoration to prevent landing halfway down on reload
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   // Direct User Activation: Launches unmuted video from 0:00 with full sound
   const handleEnter = () => {
+    // Ensure viewport is at top of intro section so opacity is 100% and in view
+    if (window.scrollY > 0) {
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    }
     setHasEntered(true);
     const video = videoRef.current;
     if (!video) return;
     video.muted = false;
     video.volume = 1.0;
     video.currentTime = 0;
-    video.play().catch(() => {});
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((err) => {
+        console.warn('Playback error fallback to muted:', err);
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    }
 
     // Only play ambient background video on desktop/tablets (saves 50% GPU on mobile)
     if (ambientVideoRef.current && window.innerWidth >= 768) {
+      ambientVideoRef.current.muted = true;
       ambientVideoRef.current.currentTime = 0;
       ambientVideoRef.current.play().catch(() => {});
     }
@@ -261,7 +280,6 @@ export const IntroVideo: React.FC = () => {
           <video
             ref={ambientVideoRef}
             src="/intro.mp4"
-            autoPlay
             playsInline
             muted
             loop={false}
@@ -291,18 +309,16 @@ export const IntroVideo: React.FC = () => {
           className="relative z-20 flex items-center justify-center select-none cursor-pointer"
         >
           {/* Responsive Media Frame: Full height on mobile (90dvh), framed on desktop */}
-          <div className="relative rounded-2xl md:rounded-3xl border border-white/10 md:border-white/15 overflow-hidden shadow-[0_0_50px_rgba(232,112,42,0.2)] md:shadow-[0_0_80px_rgba(232,112,42,0.25)] ring-1 ring-white/10 bg-black flex items-center justify-center h-[88dvh] sm:h-[88vh] md:h-[90vh] max-h-[820px] max-w-[96vw] sm:max-w-none">
+          <div className="relative aspect-[9/16] rounded-2xl md:rounded-3xl border border-white/10 md:border-white/15 overflow-hidden shadow-[0_0_50px_rgba(232,112,42,0.2)] md:shadow-[0_0_80px_rgba(232,112,42,0.25)] ring-1 ring-white/10 bg-black flex items-center justify-center h-[88dvh] sm:h-[88vh] md:h-[90vh] max-h-[820px] max-w-[96vw] sm:max-w-none">
             {/* The Full 1080p 60fps Video (Full Height, completely uncropped) */}
             <video
               id="main-intro-video"
               ref={videoRef}
               src="/intro.mp4"
               poster="/images/intro-poster.jpg"
-              autoPlay
               playsInline
-              webkit-playsinline="true"
               preload="auto"
-              className="h-full w-auto object-contain pointer-events-none"
+              className="h-full w-full object-cover pointer-events-none"
             />
           </div>
         </motion.div>
