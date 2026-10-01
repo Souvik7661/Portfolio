@@ -78,31 +78,33 @@ export const LocationMapModal: React.FC = () => {
     <>
       {/* Location Card trigger matching user design */}
       <motion.button
+        id="location-map-btn"
         type="button"
+        aria-label="View interactive location map of Shyamnagar"
         onClick={() => setIsOpen(true)}
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.98 }}
-        className="p-5 rounded-2xl bg-white border border-[#EAECE9] hover:border-[#E8702A]/50 hover:shadow-lg transition-all flex items-center justify-between gap-4 group cursor-pointer w-full text-left relative overflow-hidden"
+        className="p-5 rounded-2xl bg-[#0d0d11] border border-white/10 hover:border-[#E8702A]/60 transition-all flex items-center justify-between gap-4 group cursor-pointer w-full text-left relative overflow-hidden"
       >
         <div className="flex items-center gap-4 min-w-0">
-          <div className="p-3 rounded-xl bg-[#1C2E1E]/5 text-[#1C2E1E] group-hover:bg-[#E8702A] group-hover:text-white transition-colors shrink-0">
+          <div className="p-3 rounded-xl bg-white/5 text-white group-hover:bg-[#E8702A] transition-colors shrink-0">
             <MapPin className="w-5 h-5 text-[#E8702A] group-hover:text-white transition-colors" />
           </div>
           <div className="overflow-hidden">
             <div className="flex items-center gap-2">
-              <p className="text-xs font-mono uppercase tracking-wider text-[#738273]">Location</p>
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-medium border border-emerald-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <p className="text-xs font-mono uppercase tracking-wider text-white/50">LOCATION</p>
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono font-medium border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 Live Map
               </span>
             </div>
-            <p className="text-sm font-semibold text-[#1C2E1E] mt-0.5 group-hover:text-[#E8702A] transition-colors truncate">
+            <p className="text-sm font-semibold text-white mt-0.5 group-hover:text-[#E8702A] transition-colors truncate font-mono">
               Shyamnagar, West Bengal
             </p>
           </div>
         </div>
 
-        <div className="shrink-0 text-xs font-mono text-[#738273] group-hover:text-[#E8702A] flex items-center gap-1">
+        <div className="shrink-0 text-xs font-mono text-white/40 group-hover:text-[#E8702A] flex items-center gap-1">
           <Compass className="w-4 h-4" />
         </div>
       </motion.button>
